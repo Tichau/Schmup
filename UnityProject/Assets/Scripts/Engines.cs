@@ -7,6 +7,12 @@ public class Engines : MonoBehaviour
     [SerializeField]
     private float maximumSpeed = 1f;
 
+    [SerializeField]
+    private Rect allowedZone;
+
+    [SerializeField]
+    private bool drawAllowedZoneGizmo;
+
     public Vector2 Speed
     {
         get; 
@@ -36,8 +42,28 @@ public class Engines : MonoBehaviour
         this.Speed += speed;
     }
 
+    private void Start()
+    {
+        // Positioning the gameobject at the center of the allowed zone.
+        this.Position = this.allowedZone.center;
+    }
+
     private void Update()
     {
-        this.Position += this.Speed * this.maximumSpeed * Time.deltaTime;
+#if UNITY_EDITOR
+        if (this.drawAllowedZoneGizmo)
+        {
+            Helper.DrawRect(this.allowedZone, Color.red);
+        }
+#endif
+
+        Vector2 newPosition = this.Position + (this.Speed * this.maximumSpeed * Time.deltaTime);
+
+        if (!this.allowedZone.Contains(newPosition))
+        {
+            return;
+        }
+
+        this.Position = newPosition;
     }
 }
