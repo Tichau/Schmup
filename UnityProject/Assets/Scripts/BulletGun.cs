@@ -40,7 +40,7 @@ public class BulletGun : MonoBehaviour
 
         // Fire a bullet !
         Bullet bullet = BulletsFactory.GetBullet(this.BulletSpawnPosition);
-        bullet.Speed = new Vector2(this.baseAvatar.BulletSpeed, 0f);
+        bullet.Initialize(new Vector2(this.baseAvatar.BulletSpeed, 0f), this.baseAvatar.BulletDamage, Bullet.BulletType.DamageTheEnemies);
         this.lastFireTime = Time.time;
     }
 

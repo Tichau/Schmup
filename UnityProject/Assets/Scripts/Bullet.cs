@@ -4,10 +4,29 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public enum BulletType
+    {
+        DamageThePlayer,
+        DamageTheEnemies,
+        DamageBoth,
+    }
+
+    public BulletType Type
+    {
+        get;
+        private set;
+    }
+
+    public float Damage
+    {
+        get;
+        private set;
+    }
+
     public Vector2 Speed
     {
         get;
-        set;
+        private set;
     }
 
     public Vector2 Position
@@ -20,6 +39,38 @@ public class Bullet : MonoBehaviour
         set
         {
             this.transform.position = value;
+        }
+    }
+
+    public void Initialize(Vector2 speed, float damage, BulletType bulletType)
+    {
+        this.Speed = speed;
+        this.Damage = damage;
+        this.Type = bulletType;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        BaseAvatar avatar = null;
+        switch (this.Type)
+        {
+            case BulletType.DamageTheEnemies:
+                avatar = other.gameObject.GetComponent<EnemyAvatar>();
+                break;
+
+            case BulletType.DamageThePlayer:
+                avatar = other.gameObject.GetComponent<PlayerAvatar>();
+                break;
+
+            case BulletType.DamageBoth:
+                avatar = other.gameObject.GetComponent<BaseAvatar>();
+                break;
+        }
+
+        if (avatar != null)
+        {
+            avatar.TakeDamage(this.Damage);
+            BulletsFactory.ReleaseBullet(this);
         }
     }
 

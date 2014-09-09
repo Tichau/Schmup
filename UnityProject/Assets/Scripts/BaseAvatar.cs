@@ -16,7 +16,10 @@ public class BaseAvatar : MonoBehaviour
     [SerializeField]
     private int rateOfFire;
 
-    public int HealthPoint
+    [SerializeField]
+    private float bulletDamage;
+
+    public float HealthPoint
     {
         get; 
         private set;
@@ -28,6 +31,7 @@ public class BaseAvatar : MonoBehaviour
         {
             return this.maximumSpeed;
         }
+
         private set
         {
             this.maximumSpeed = value;
@@ -54,10 +58,39 @@ public class BaseAvatar : MonoBehaviour
         {
             return this.rateOfFire;
         }
+
         private set
         {
             this.rateOfFire = value;
         }
+    }
+
+    public float BulletDamage
+    {
+        get
+        {
+            return this.bulletDamage;
+        }
+
+        private set
+        {
+            this.bulletDamage = value;
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        this.HealthPoint -= damage;
+
+        if (this.HealthPoint <= 0f)
+        {
+            this.Die();
+        }
+    }
+
+    private void Die()
+    {
+        GameObject.Destroy(this.gameObject);
     }
 
     private void Start()
