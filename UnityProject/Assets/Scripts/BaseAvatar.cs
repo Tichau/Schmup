@@ -28,6 +28,19 @@ public class BaseAvatar : MonoBehaviour
         private set;
     }
 
+    public Vector2 Position
+    {
+        get
+        {
+            return this.transform.position;
+        }
+
+        set
+        {
+            this.transform.position = value;
+        }
+    }
+
     public float MaximumSpeed
     {
         get
@@ -104,7 +117,7 @@ public class BaseAvatar : MonoBehaviour
         }
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         GameObject.Destroy(this.gameObject);
     }
@@ -114,7 +127,7 @@ public class BaseAvatar : MonoBehaviour
         this.HealthPoint = this.maximumHealthPoint;
     }
     
-    private void Update()
+    protected virtual void Update()
     {
     }
 }

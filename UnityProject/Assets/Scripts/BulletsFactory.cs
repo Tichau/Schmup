@@ -52,12 +52,11 @@ public class BulletsFactory : MonoBehaviour
             gameObject.transform.parent = BulletsFactory.Instance.gameObject.transform;
             bullet = gameObject.GetComponent<Bullet>();
             BulletsFactory.Instance.bulletCount++;
+            Debug.Log("Number of bullet instantiated = " + BulletsFactory.Instance.bulletCount);
         }
 
         bullet.Position = position;
         bullet.gameObject.SetActive(true);
-
-        Debug.Log("Number of bullet instantiated = " + BulletsFactory.Instance.bulletCount);
 
         return bullet;
     }

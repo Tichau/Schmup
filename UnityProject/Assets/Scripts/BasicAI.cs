@@ -32,6 +32,7 @@ public class BasicAI : MonoBehaviour
     {
         if (this.engines != null)
         {
+            this.engines.SetSpeed(new Vector2(-1f, 0f));
         }
 
         if (this.bulletGuns != null)
