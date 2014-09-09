@@ -19,6 +19,9 @@ public class BaseAvatar : MonoBehaviour
     [SerializeField]
     private float bulletDamage;
 
+    [SerializeField]
+    private BulletType bulletType;
+
     public float HealthPoint
     {
         get; 
@@ -75,6 +78,19 @@ public class BaseAvatar : MonoBehaviour
         private set
         {
             this.bulletDamage = value;
+        }
+    }
+
+    public BulletType BulletType
+    {
+        get
+        {
+            return bulletType;
+        }
+
+        private set
+        {
+            bulletType = value;
         }
     }
 

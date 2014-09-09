@@ -22,6 +22,15 @@ public class BulletGun : MonoBehaviour
         }
     }
 
+    private float Angle
+    {
+        get
+        {
+            // Warning ! Euler angles are in degree.
+            return this.transform.eulerAngles.z * Mathf.Deg2Rad;
+        }
+    }
+
     public void Fire()
     {
         if (this.baseAvatar.RateOfFire <= 0f)
@@ -38,9 +47,11 @@ public class BulletGun : MonoBehaviour
             return;
         }
 
+        Vector2 speed = new Vector2(this.baseAvatar.BulletSpeed * Mathf.Cos(this.Angle), this.baseAvatar.BulletSpeed * Mathf.Sin(this.Angle));
+
         // Fire a bullet !
-        Bullet bullet = BulletsFactory.GetBullet(this.BulletSpawnPosition);
-        bullet.Initialize(new Vector2(this.baseAvatar.BulletSpeed, 0f), this.baseAvatar.BulletDamage, Bullet.BulletType.DamageTheEnemies);
+        Bullet bullet = BulletsFactory.GetBullet(this.BulletSpawnPosition, this.baseAvatar.BulletType);
+        bullet.Initialize(speed, this.baseAvatar.BulletDamage);
         this.lastFireTime = Time.time;
     }
 

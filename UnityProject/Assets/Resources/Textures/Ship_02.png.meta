@@ -1,9 +1,8 @@
 fileFormatVersion: 2
-guid: dda1b1d55c9e2194585c6961bba92601
+guid: d853cd4e2998b9f4493441547af6259a
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Bullets
-    21300002: Bullet
+    21300000: Ship_02
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -27,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: 2
-    aniso: 1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

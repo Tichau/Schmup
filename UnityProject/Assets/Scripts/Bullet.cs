@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public enum BulletType
-    {
-        DamageThePlayer,
-        DamageTheEnemies,
-        DamageBoth,
-    }
+    [SerializeField]
+    private BulletType type;
 
     public BulletType Type
     {
-        get;
-        private set;
+        get
+        {
+            return this.type;
+        }
+
+        private set
+        {
+            this.type = value;
+        }
     }
 
     public float Damage
@@ -42,28 +45,23 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Initialize(Vector2 speed, float damage, BulletType bulletType)
+    public void Initialize(Vector2 speed, float damage)
     {
         this.Speed = speed;
         this.Damage = damage;
-        this.Type = bulletType;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         BaseAvatar avatar = null;
-        switch (this.Type)
+        switch (this.type)
         {
-            case BulletType.DamageTheEnemies:
+            case BulletType.PlayerBullet:
                 avatar = other.gameObject.GetComponent<EnemyAvatar>();
                 break;
 
-            case BulletType.DamageThePlayer:
+            case BulletType.EnemyBullet:
                 avatar = other.gameObject.GetComponent<PlayerAvatar>();
-                break;
-
-            case BulletType.DamageBoth:
-                avatar = other.gameObject.GetComponent<BaseAvatar>();
                 break;
         }
 

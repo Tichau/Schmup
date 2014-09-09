@@ -8,10 +8,14 @@ using UnityEngine;
 public class BulletsFactory : MonoBehaviour
 {
     private int bulletCount = 0;
-    private Queue<Bullet> availableBullets = new Queue<Bullet>();
+
+    private Dictionary<BulletType, Queue<Bullet>> availableBulletsByType = new Dictionary<BulletType, Queue<Bullet>>();
 
     [SerializeField]
-    private GameObject bulletsPrefab;
+    private GameObject playerBulletPrefab;
+
+    [SerializeField]
+    private GameObject enemyBulletPrefab;
 
     private static BulletsFactory Instance
     {
@@ -19,18 +23,32 @@ public class BulletsFactory : MonoBehaviour
         set;
     }
 
-    public static Bullet GetBullet(Vector2 position)
+    public static Bullet GetBullet(Vector2 position, BulletType bulletType)
     {
+        Queue<Bullet> availableBullets = BulletsFactory.Instance.availableBulletsByType[bulletType];
+
         Bullet bullet = null;
-        if (BulletsFactory.Instance.availableBullets.Count > 0)
+        if (availableBullets.Count > 0)
         {
-            bullet = BulletsFactory.Instance.availableBullets.Dequeue();
+            bullet = availableBullets.Dequeue();
         }
 
         if (bullet == null)
         {
             // Instantiate a new bullet.
-            GameObject gameObject = (GameObject)GameObject.Instantiate(Instance.bulletsPrefab, position, Quaternion.identity);
+            GameObject gameObject = null;
+
+            switch (bulletType)
+            {
+                case BulletType.EnemyBullet:
+                    gameObject = (GameObject)GameObject.Instantiate(Instance.enemyBulletPrefab, position, Quaternion.identity);
+                    break;
+
+                    case BulletType.PlayerBullet:
+                    gameObject = (GameObject)GameObject.Instantiate(Instance.playerBulletPrefab, position, Quaternion.identity);
+                    break;
+            }
+
             gameObject.transform.parent = BulletsFactory.Instance.gameObject.transform;
             bullet = gameObject.GetComponent<Bullet>();
             BulletsFactory.Instance.bulletCount++;
@@ -46,8 +64,9 @@ public class BulletsFactory : MonoBehaviour
 
     public static void ReleaseBullet(Bullet bullet)
     {
+        Queue<Bullet> availableBullets = BulletsFactory.Instance.availableBulletsByType[bullet.Type];
         bullet.gameObject.SetActive(false);
-        BulletsFactory.Instance.availableBullets.Enqueue(bullet);
+        availableBullets.Enqueue(bullet);
     }
 
     private void Awake()
@@ -59,13 +78,24 @@ public class BulletsFactory : MonoBehaviour
         }
 
         Instance = this;
+
+        foreach (object value in System.Enum.GetValues(typeof(BulletType)))
+        {
+            this.availableBulletsByType.Add((BulletType)value, new Queue<Bullet>());
+        }
     }
 
     private void Start()
     {
-        if (this.bulletsPrefab == null)
+        if (this.playerBulletPrefab == null)
         {
-            Debug.LogError("The bullet prefab is not set.");
+            Debug.LogError("A bullet prefab is not set.");
+            return;
+        }
+
+        if (this.enemyBulletPrefab == null)
+        {
+            Debug.LogError("A bullet prefab is not set.");
             return;
         }
     }

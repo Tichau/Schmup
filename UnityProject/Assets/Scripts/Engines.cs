@@ -10,6 +10,9 @@ public class Engines : MonoBehaviour
     [SerializeField]
     private bool drawAllowedZoneGizmo;
 
+    [SerializeField]
+    private bool autoPositionAtStart;
+
     private BaseAvatar baseAvatar;
 
     public Vector2 Speed
@@ -63,7 +66,10 @@ public class Engines : MonoBehaviour
         }
 
         // Positioning the gameobject at the center of the allowed zone.
-        this.Position = this.allowedZone.center;
+        if (this.autoPositionAtStart)
+        {
+            this.Position = this.allowedZone.center;
+        }
     }
 
     private void Update()
