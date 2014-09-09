@@ -8,7 +8,13 @@ public class BaseAvatar : MonoBehaviour
     private int maximumHealthPoint;
 
     [SerializeField]
-    private float initialMaximumSpeed = 1f;
+    private float maximumSpeed;
+
+    [SerializeField]
+    private float bulletSpeed;
+
+    [SerializeField]
+    private int rateOfFire;
 
     public int HealthPoint
     {
@@ -18,14 +24,45 @@ public class BaseAvatar : MonoBehaviour
 
     public float MaximumSpeed
     {
-        get;
-        private set;
+        get
+        {
+            return this.maximumSpeed;
+        }
+        private set
+        {
+            this.maximumSpeed = value;
+        }
+    }
+
+    public float BulletSpeed
+    {
+        get
+        {
+            return this.bulletSpeed;
+        }
+
+        private set
+        {
+            this.bulletSpeed = value;
+        }
+    }
+
+
+    public int RateOfFire
+    {
+        get
+        {
+            return this.rateOfFire;
+        }
+        private set
+        {
+            this.rateOfFire = value;
+        }
     }
 
     private void Start()
     {
         this.HealthPoint = this.maximumHealthPoint;
-        this.MaximumSpeed = this.initialMaximumSpeed;
     }
     
     private void Update()
