@@ -59,6 +59,6 @@ public class GameManager : MonoBehaviour
         this.lastEnemySpawnTime = Time.time;
 
         // Up the difficulty.
-        this.rateOfEnemySpawn += 0.05f;
+        this.rateOfEnemySpawn += this.rateOfEnemySpawn > 1f ? 0f : 0.02f;
     }
 }
