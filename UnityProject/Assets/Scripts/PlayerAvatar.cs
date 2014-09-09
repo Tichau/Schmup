@@ -3,17 +3,4 @@
 
 public class PlayerAvatar : BaseAvatar
 {
-    protected internal float HowMuchDoILoveyou()
-    {
-        return float.PositiveInfinity;
-    }
-
-    private void Start()
-    {
-    }
-    
-    private void Update()
-    {
-    }
-
 }

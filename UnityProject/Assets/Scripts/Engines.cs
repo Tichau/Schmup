@@ -5,13 +5,12 @@ using UnityEngine;
 public class Engines : MonoBehaviour
 {
     [SerializeField]
-    private float maximumSpeed = 1f;
-
-    [SerializeField]
     private Rect allowedZone;
 
     [SerializeField]
     private bool drawAllowedZoneGizmo;
+
+    private BaseAvatar baseAvatar;
 
     public Vector2 Speed
     {
@@ -32,6 +31,19 @@ public class Engines : MonoBehaviour
         }
     }
 
+    private float MaximumSpeed
+    {
+        get
+        {
+            if (this.baseAvatar == null)
+            {
+                return 0f;
+            }
+
+            return this.baseAvatar.MaximumSpeed;
+        }
+    }
+
     public void SetSpeed(Vector2 speed)
     {
         this.Speed = speed;
@@ -44,6 +56,12 @@ public class Engines : MonoBehaviour
 
     private void Start()
     {
+        this.baseAvatar = this.GetComponent<BaseAvatar>();
+        if (this.baseAvatar == null)
+        {
+            Debug.LogWarning(string.Format("Can't retrieve a base avatar on the gameobject {0}.", this.gameObject.name));
+        }
+
         // Positioning the gameobject at the center of the allowed zone.
         this.Position = this.allowedZone.center;
     }
@@ -57,7 +75,7 @@ public class Engines : MonoBehaviour
         }
 #endif
 
-        Vector2 newPosition = this.Position + (this.Speed * this.maximumSpeed * Time.deltaTime);
+        Vector2 newPosition = this.Position + (this.Speed * this.MaximumSpeed * Time.deltaTime);
 
         if (!this.allowedZone.Contains(newPosition))
         {
