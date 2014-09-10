@@ -16,6 +16,12 @@ public class BulletGun : MonoBehaviour
     [SerializeField]
     private float rateOfFire;
 
+    [SerializeField]
+    private float bulletSpeed;
+
+    [SerializeField]
+    private float bulletDamage;
+
     private BaseAvatar baseAvatar;
 
     private float lastFireTime = 0f;
@@ -43,6 +49,32 @@ public class BulletGun : MonoBehaviour
         private set
         {
             this.energyConsumedPerBullet = value;
+        }
+    }
+
+    public float BulletSpeed
+    {
+        get
+        {
+            return this.bulletSpeed;
+        }
+
+        private set
+        {
+            this.bulletSpeed = value;
+        }
+    }
+
+    public float BulletDamage
+    {
+        get
+        {
+            return this.bulletDamage;
+        }
+
+        private set
+        {
+            this.bulletDamage = value;
         }
     }
 
@@ -104,11 +136,11 @@ public class BulletGun : MonoBehaviour
 
         this.baseAvatar.Energy -= this.EnergyConsumedPerBullet;
 
-        Vector2 speed = new Vector2(this.baseAvatar.BulletSpeed * Mathf.Cos(this.Angle), this.baseAvatar.BulletSpeed * Mathf.Sin(this.Angle));
+        Vector2 speed = new Vector2(this.BulletSpeed * Mathf.Cos(this.Angle), this.BulletSpeed * Mathf.Sin(this.Angle));
 
         // Fire a bullet !
         Bullet bullet = BulletsFactory.GetBullet(this.BulletSpawnPosition, this.baseAvatar.BulletType);
-        bullet.Initialize(speed, this.baseAvatar.BulletDamage);
+        bullet.Initialize(speed, this.BulletDamage);
         this.lastFireTime = Time.time;
     }
 

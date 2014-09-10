@@ -14,12 +14,6 @@ public class BaseAvatar : MonoBehaviour
     private float maximumSpeed;
 
     [SerializeField]
-    private float bulletSpeed;
-
-    [SerializeField]
-    private float bulletDamage;
-
-    [SerializeField]
     private float energyRegenRate;
     
     [SerializeField]
@@ -89,32 +83,6 @@ public class BaseAvatar : MonoBehaviour
         private set
         {
             this.maximumSpeed = value;
-        }
-    }
-
-    public float BulletSpeed
-    {
-        get
-        {
-            return this.bulletSpeed;
-        }
-
-        private set
-        {
-            this.bulletSpeed = value;
-        }
-    }
-
-    public float BulletDamage
-    {
-        get
-        {
-            return this.bulletDamage;
-        }
-
-        private set
-        {
-            this.bulletDamage = value;
         }
     }
 
