@@ -11,7 +11,6 @@ public class SimpleBullet : Bullet
         base.Initialize(startDirection, speed, damage);
 
         this.speed = startDirection * speed;
-        Debug.Log(this.speed);
     }
 
     protected override void UpdatePosition()

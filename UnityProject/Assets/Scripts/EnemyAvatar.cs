@@ -35,4 +35,15 @@ public class EnemyAvatar : BaseAvatar
             EnemyFactory.ReleaseBullet(this);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        BaseAvatar avatar = avatar = other.gameObject.GetComponent<BaseAvatar>();
+        Debug.Log(this.name);
+        if (avatar != null)
+        {
+            avatar.TakeDamage(this.DamageDealthAtCollision);
+            this.TakeDamage(avatar.DamageDealthAtCollision);
+        }
+    }
 }

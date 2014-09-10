@@ -21,6 +21,9 @@ public class BaseAvatar : MonoBehaviour
 
     [SerializeField]
     private float energyRegenRate;
+
+    [SerializeField]
+    private float damageDealthAtCollision;
     
     private float energyRegenEfficiency = 1f;
     private float energy;
@@ -98,6 +101,19 @@ public class BaseAvatar : MonoBehaviour
         private set
         {
             this.maximumSpeed = value;
+        }
+    }
+
+    public float DamageDealthAtCollision
+    {
+        get
+        {
+            return this.damageDealthAtCollision;
+        }
+
+        private set
+        {
+            this.damageDealthAtCollision = value;
         }
     }
 
