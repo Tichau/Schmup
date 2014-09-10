@@ -22,9 +22,6 @@ public class BaseAvatar : MonoBehaviour
     [SerializeField]
     private float energyRegenRate;
     
-    [SerializeField]
-    private BulletType bulletType;
-
     private float energyRegenEfficiency = 1f;
     private float energy;
     
@@ -105,19 +102,6 @@ public class BaseAvatar : MonoBehaviour
     }
 
     //// Properties.
-    public BulletType BulletType
-    {
-        get
-        {
-            return bulletType;
-        }
-
-        private set
-        {
-            bulletType = value;
-        }
-    }
-
     public Vector2 Position
     {
         get

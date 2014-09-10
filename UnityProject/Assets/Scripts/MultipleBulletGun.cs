@@ -17,7 +17,7 @@ public class MultipleBulletGun : BulletGun
 
     protected float GetBulletSpawnAngle(int canonIndex)
     {
-        return this.GameObjectAngle + this.canonDescriptions[canonIndex].BulletSpawnOffsetAngle;
+        return this.GameObjectAngle + this.canonDescriptions[canonIndex].BulletSpawnOffsetAngle * Mathf.Deg2Rad;
     }
 
     protected override void Fire()
@@ -27,11 +27,11 @@ public class MultipleBulletGun : BulletGun
         for (int index = 0; index < this.canonDescriptions.Length; index++)
         {
             float bulletSpawnAngle = this.GetBulletSpawnAngle(index);
-            Vector2 speed = new Vector2(this.BulletSpeed * Mathf.Cos(bulletSpawnAngle), this.BulletSpeed * Mathf.Sin(bulletSpawnAngle));
+            Vector2 direction = new Vector2(Mathf.Cos(bulletSpawnAngle), Mathf.Sin(bulletSpawnAngle));
 
             // Fire a bullet !
-            Bullet bullet = BulletsFactory.GetBullet(this.GetBulletSpawnPosition(index), this.baseAvatar.BulletType);
-            bullet.Initialize(speed, this.BulletDamage);
+            Bullet bullet = BulletsFactory.GetBullet(this.GetBulletSpawnPosition(index), this.BulletType);
+            bullet.Initialize(direction, this.BulletSpeed, this.BulletDamage);
         }
     }
     

@@ -22,11 +22,11 @@ public class SimpleBulletGun : BulletGun
     {
         base.Fire();
 
-        Vector2 speed = new Vector2(this.BulletSpeed * Mathf.Cos(this.GameObjectAngle), this.BulletSpeed * Mathf.Sin(this.GameObjectAngle));
+        Vector2 direction = new Vector2(Mathf.Cos(this.GameObjectAngle), Mathf.Sin(this.GameObjectAngle));
 
         // Fire a bullet !
-        Bullet bullet = BulletsFactory.GetBullet(this.BulletSpawnPosition, this.baseAvatar.BulletType);
-        bullet.Initialize(speed, this.BulletDamage);
+        Bullet bullet = BulletsFactory.GetBullet(this.BulletSpawnPosition, this.BulletType);
+        bullet.Initialize(direction, this.BulletSpeed, this.BulletDamage);
     }
     
     private void Update()

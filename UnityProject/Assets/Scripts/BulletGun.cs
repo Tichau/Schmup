@@ -20,6 +20,9 @@ public abstract class BulletGun : MonoBehaviour
     [SerializeField]
     private float bulletDamage;
 
+    [SerializeField]
+    private BulletType bulletType;
+
     private float lastFireTime = 0f;
 
     public float RateOfFire
@@ -71,6 +74,19 @@ public abstract class BulletGun : MonoBehaviour
         private set
         {
             this.bulletDamage = value;
+        }
+    }
+
+    public BulletType BulletType
+    {
+        get
+        {
+            return bulletType;
+        }
+
+        private set
+        {
+            bulletType = value;
         }
     }
 

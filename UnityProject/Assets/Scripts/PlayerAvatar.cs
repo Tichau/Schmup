@@ -31,7 +31,6 @@ public class PlayerAvatar : BaseAvatar
 
         this.lastWeaponSelectionChangeTime = Time.time;
         this.selectedWeapon = (this.selectedWeapon + 1) % this.weaponsNames.Length;
-        Debug.Log(string.Format("Weapon selected = {0}", this.selectedWeapon));
 
         for (int index = 0; index < this.bulletGuns.Length; index++)
         {

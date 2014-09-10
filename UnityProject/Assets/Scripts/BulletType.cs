@@ -4,4 +4,5 @@ public enum BulletType
 {
     PlayerBullet,
     EnemyBullet,
+    PlayerSpiralBullet,
 }

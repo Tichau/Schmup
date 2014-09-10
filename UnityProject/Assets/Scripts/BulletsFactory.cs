@@ -17,6 +17,9 @@ public class BulletsFactory : MonoBehaviour
     [SerializeField]
     private GameObject enemyBulletPrefab;
 
+    [SerializeField]
+    private GameObject playerSpiralBulletPrefab;
+
     private static BulletsFactory Instance
     {
         get;
@@ -44,8 +47,12 @@ public class BulletsFactory : MonoBehaviour
                     gameObject = (GameObject)GameObject.Instantiate(Instance.enemyBulletPrefab, position, Quaternion.identity);
                     break;
 
-                    case BulletType.PlayerBullet:
+                case BulletType.PlayerBullet:
                     gameObject = (GameObject)GameObject.Instantiate(Instance.playerBulletPrefab, position, Quaternion.identity);
+                    break;
+
+                case BulletType.PlayerSpiralBullet:
+                    gameObject = (GameObject)GameObject.Instantiate(Instance.playerSpiralBulletPrefab, position, Quaternion.identity);
                     break;
             }
 

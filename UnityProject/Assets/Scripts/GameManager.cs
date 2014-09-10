@@ -1,7 +1,6 @@
 ﻿// <copyright file="GameManager.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
 
 using UnityEngine;
-using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject enemyPrefab;
 
+    [SerializeField]
     private float rateOfEnemySpawn = 0.2f;
 
     private double lastEnemySpawnTime;

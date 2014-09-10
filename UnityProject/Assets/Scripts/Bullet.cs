@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public abstract class Bullet : MonoBehaviour
 {
     [SerializeField]
     private BulletType type;
@@ -23,13 +23,7 @@ public class Bullet : MonoBehaviour
     public float Damage
     {
         get;
-        private set;
-    }
-
-    public Vector2 Speed
-    {
-        get;
-        private set;
+        protected set;
     }
 
     public Vector2 Position
@@ -45,10 +39,24 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void Initialize(Vector2 speed, float damage)
+    public virtual void Initialize(Vector2 startDirection, float speed, float damage)
     {
-        this.Speed = speed;
         this.Damage = damage;
+    }
+
+    protected virtual void UpdatePosition()
+    {
+    }
+
+    private void Update()
+    {
+        this.UpdatePosition();
+
+        // Very simple test if out of bound bullet.
+        if (this.Position.x > 20 || this.Position.x < -20 || this.Position.y > 20 || this.Position.y < -20)
+        {
+            BulletsFactory.ReleaseBullet(this);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -56,6 +64,7 @@ public class Bullet : MonoBehaviour
         BaseAvatar avatar = null;
         switch (this.type)
         {
+            case BulletType.PlayerSpiralBullet:
             case BulletType.PlayerBullet:
                 avatar = other.gameObject.GetComponent<EnemyAvatar>();
                 break;
@@ -63,26 +72,15 @@ public class Bullet : MonoBehaviour
             case BulletType.EnemyBullet:
                 avatar = other.gameObject.GetComponent<PlayerAvatar>();
                 break;
+                
+            default:
+                Debug.LogError("Unknown bullet type " + this.type);
+                break;
         }
 
         if (avatar != null)
         {
             avatar.TakeDamage(this.Damage);
-            BulletsFactory.ReleaseBullet(this);
-        }
-    }
-
-    private void Start()
-    {
-    }
-    
-    private void Update()
-    {
-        this.Position += this.Speed * Time.deltaTime;
-
-        // Very simple test if out of bound bullet.
-        if (this.Position.x > 20 || this.Position.x < -20 || this.Position.y > 20 || this.Position.y < -20)
-        {
             BulletsFactory.ReleaseBullet(this);
         }
     }
