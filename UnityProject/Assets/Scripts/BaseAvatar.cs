@@ -14,7 +14,7 @@ public class BaseAvatar : MonoBehaviour
     private float bulletSpeed;
 
     [SerializeField]
-    private int rateOfFire;
+    private float rateOfFire;
 
     [SerializeField]
     private float bulletDamage;
@@ -22,23 +22,11 @@ public class BaseAvatar : MonoBehaviour
     [SerializeField]
     private BulletType bulletType;
 
+    //// Statistics.
     public float HealthPoint
     {
         get; 
         private set;
-    }
-
-    public Vector2 Position
-    {
-        get
-        {
-            return this.transform.position;
-        }
-
-        set
-        {
-            this.transform.position = value;
-        }
     }
 
     public float MaximumHealthPoint
@@ -80,8 +68,7 @@ public class BaseAvatar : MonoBehaviour
         }
     }
 
-
-    public int RateOfFire
+    public float RateOfFire
     {
         get
         {
@@ -107,6 +94,7 @@ public class BaseAvatar : MonoBehaviour
         }
     }
 
+    //// Properties.
     public BulletType BulletType
     {
         get
@@ -117,6 +105,19 @@ public class BaseAvatar : MonoBehaviour
         private set
         {
             bulletType = value;
+        }
+    }
+
+    public Vector2 Position
+    {
+        get
+        {
+            return this.transform.position;
+        }
+
+        set
+        {
+            this.transform.position = value;
         }
     }
 
@@ -135,12 +136,12 @@ public class BaseAvatar : MonoBehaviour
         GameObject.Destroy(this.gameObject);
     }
 
+    protected virtual void Update()
+    {
+    }
+
     private void Start()
     {
         this.HealthPoint = this.maximumHealthPoint;
-    }
-    
-    protected virtual void Update()
-    {
     }
 }
