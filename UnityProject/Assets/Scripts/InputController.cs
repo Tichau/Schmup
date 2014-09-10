@@ -44,7 +44,7 @@ public class InputController : MonoBehaviour
 
                 if (Input.GetAxis("Fire") > 0f)
                 {
-                    bulletGun.Fire();
+                    bulletGun.TryToFire();
                 }
             }
         }

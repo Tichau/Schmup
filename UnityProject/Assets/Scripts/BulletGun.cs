@@ -2,13 +2,9 @@
 
 using UnityEngine;
 
-public class BulletGun : MonoBehaviour
+public abstract class BulletGun : MonoBehaviour
 {
-    [SerializeField]
-    private Vector2 bulletSpawnOffsetPosition;
-
-    [SerializeField]
-    private bool drawAllowedZoneGizmo;
+    protected BaseAvatar baseAvatar;
 
     [SerializeField]
     private float energyConsumedPerBullet;
@@ -21,8 +17,6 @@ public class BulletGun : MonoBehaviour
 
     [SerializeField]
     private float bulletDamage;
-
-    private BaseAvatar baseAvatar;
 
     private float lastFireTime = 0f;
 
@@ -78,7 +72,7 @@ public class BulletGun : MonoBehaviour
         }
     }
 
-    public bool IsFiring
+    public virtual bool IsFiring
     {
         get
         {
@@ -97,15 +91,7 @@ public class BulletGun : MonoBehaviour
         }
     }
 
-    private Vector2 BulletSpawnPosition
-    {
-        get
-        {
-            return (Vector2)this.transform.position + this.bulletSpawnOffsetPosition;
-        }
-    }
-
-    private float Angle
+    protected float GameObjectAngle
     {
         get
         {
@@ -114,57 +100,54 @@ public class BulletGun : MonoBehaviour
         }
     }
 
-    public void Fire()
+    public virtual bool CanFire()
     {
         if (!this.baseAvatar.CanFire())
         {
-            return;
+            return false;
         }
 
         if (this.RateOfFire <= 0f)
         {
             // The avatar has a nul rate of fire, The bullet gun can't fire.
-            return;
+            return false;
         }
 
         if (this.IsFiring)
         {
             // The bullet gun is in cooldown, it can't fire.
-            return;
+            return false;
         }
 
         if (this.baseAvatar.Energy < this.EnergyConsumedPerBullet)
         {
             // Not enough energy to fire a bullet.
-            return;
+            return false;
         }
 
+        return true;
+    }
+
+    public virtual void TryToFire()
+    {
+        if (this.CanFire())
+        {
+            this.Fire();
+        }
+    }
+
+    protected virtual void Fire()
+    {
         this.baseAvatar.Energy -= this.EnergyConsumedPerBullet;
-
-        Vector2 speed = new Vector2(this.BulletSpeed * Mathf.Cos(this.Angle), this.BulletSpeed * Mathf.Sin(this.Angle));
-
-        // Fire a bullet !
-        Bullet bullet = BulletsFactory.GetBullet(this.BulletSpawnPosition, this.baseAvatar.BulletType);
-        bullet.Initialize(speed, this.BulletDamage);
         this.lastFireTime = Time.time;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         this.baseAvatar = this.GetComponent<BaseAvatar>();
         if (this.baseAvatar == null)
         {
             Debug.LogWarning(string.Format("Can't retrieve a base avatar on the gameobject {0}.", this.gameObject.name));
         }
-    }
-    
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (this.drawAllowedZoneGizmo)
-        {
-            Debug.DrawLine(this.BulletSpawnPosition, this.BulletSpawnPosition + new Vector2(0.1f, 0f), Color.red);
-        }
-#endif
     }
 }

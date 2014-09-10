@@ -42,7 +42,7 @@ public class BasicAI : MonoBehaviour
                 BulletGun bulletGun = this.bulletGuns[index];
 
                 // Fire all the time !
-                bulletGun.Fire();
+                bulletGun.TryToFire();
             }
         }
     }
