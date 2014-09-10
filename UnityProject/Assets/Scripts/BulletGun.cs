@@ -2,11 +2,12 @@
 
 using UnityEngine;
 
-public abstract class BulletGun : MonoBehaviour
+public class BulletGun : MonoBehaviour
 {
-    public string WeaponName;
-
     protected BaseAvatar baseAvatar;
+
+    [SerializeField]
+    private string weaponName;
 
     [SerializeField]
     private float energyConsumedPerBullet;
@@ -22,6 +23,12 @@ public abstract class BulletGun : MonoBehaviour
 
     [SerializeField]
     private BulletType bulletType;
+
+    [SerializeField]
+    private bool drawAllowedZoneGizmo;
+
+    [SerializeField]
+    private CanonDescription[] canonDescriptions;
 
     private float lastFireTime = 0f;
 
@@ -77,6 +84,19 @@ public abstract class BulletGun : MonoBehaviour
         }
     }
 
+    public string WeaponName
+    {
+        get
+        {
+            return weaponName;
+        }
+
+        private set
+        {
+            weaponName = value;
+        }
+    }
+
     public BulletType BulletType
     {
         get
@@ -118,7 +138,15 @@ public abstract class BulletGun : MonoBehaviour
         }
     }
 
-    public virtual bool CanFire()
+    public virtual void TryToFire()
+    {
+        if (this.CanFire())
+        {
+            this.Fire();
+        }
+    }
+
+    protected virtual bool CanFire()
     {
         if (!this.enabled)
         {
@@ -152,18 +180,30 @@ public abstract class BulletGun : MonoBehaviour
         return true;
     }
 
-    public virtual void TryToFire()
+    protected Vector2 GetBulletSpawnPosition(int canonIndex)
     {
-        if (this.CanFire())
-        {
-            this.Fire();
-        }
+        return (Vector2)this.transform.position + this.canonDescriptions[canonIndex].BulletSpawnOffsetPosition;
+    }
+
+    protected float GetBulletSpawnAngle(int canonIndex)
+    {
+        return this.GameObjectAngle + (this.canonDescriptions[canonIndex].BulletSpawnOffsetAngle * Mathf.Deg2Rad);
     }
 
     protected virtual void Fire()
     {
         this.baseAvatar.Energy -= this.EnergyConsumedPerBullet;
         this.lastFireTime = Time.time;
+
+        for (int index = 0; index < this.canonDescriptions.Length; index++)
+        {
+            float bulletSpawnAngle = this.GetBulletSpawnAngle(index);
+            Vector2 direction = new Vector2(Mathf.Cos(bulletSpawnAngle), Mathf.Sin(bulletSpawnAngle));
+
+            // Fire a bullet !
+            Bullet bullet = BulletsFactory.GetBullet(this.GetBulletSpawnPosition(index), this.BulletType);
+            bullet.Initialize(direction, this.BulletSpeed, this.BulletDamage);
+        }
     }
 
     protected virtual void Start()
@@ -173,5 +213,21 @@ public abstract class BulletGun : MonoBehaviour
         {
             Debug.LogWarning(string.Format("Can't retrieve a base avatar on the gameobject {0}.", this.gameObject.name));
         }
+    }
+
+    protected void Update()
+    {
+#if UNITY_EDITOR
+        if (this.drawAllowedZoneGizmo)
+        {
+            for (int index = 0; index < this.canonDescriptions.Length; index++)
+            {
+                float bulletSpawnAngle = this.GetBulletSpawnAngle(index);
+                Vector2 speed = new Vector2(this.BulletSpeed * Mathf.Cos(bulletSpawnAngle), this.BulletSpeed * Mathf.Sin(bulletSpawnAngle));
+
+                Debug.DrawLine(this.GetBulletSpawnPosition(index), this.GetBulletSpawnPosition(index) + speed, Color.red);
+            }
+        }
+#endif
     }
 }

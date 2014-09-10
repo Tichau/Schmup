@@ -38,8 +38,7 @@ public class EnemyAvatar : BaseAvatar
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        BaseAvatar avatar = avatar = other.gameObject.GetComponent<BaseAvatar>();
-        Debug.Log(this.name);
+        BaseAvatar avatar = other.gameObject.GetComponent<BaseAvatar>();
         if (avatar != null)
         {
             avatar.TakeDamage(this.DamageDealthAtCollision);
