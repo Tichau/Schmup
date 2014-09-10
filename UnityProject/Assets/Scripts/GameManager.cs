@@ -15,10 +15,16 @@ public class GameManager : MonoBehaviour
 
     private double lastEnemySpawnTime;
 
-    private static GameManager Instance
+    public static GameManager Instance
     {
         get;
-        set;
+        private set;
+    }
+
+    public PlayerAvatar PlayerAvatar
+    {
+        get;
+        private set;
     }
 
     private void Awake()
@@ -36,6 +42,11 @@ public class GameManager : MonoBehaviour
     {
         // Spawn the player.
         GameObject player = (GameObject)GameObject.Instantiate(Instance.playerPrefab, new Vector3(0f, 0f), Quaternion.identity);
+        this.PlayerAvatar = player.GetComponent<PlayerAvatar>();
+        if (this.PlayerAvatar == null)
+        {
+            Debug.LogError("Can't retrieve the PlayerAvatar script.");
+        }
     }
     
     private void Update()

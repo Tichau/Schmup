@@ -5,7 +5,7 @@ using UnityEngine;
 public class BaseAvatar : MonoBehaviour
 {
     [SerializeField]
-    private int maximumHealthPoint;
+    private float maximumHealthPoint;
 
     [SerializeField]
     private float maximumSpeed;
@@ -38,6 +38,19 @@ public class BaseAvatar : MonoBehaviour
         set
         {
             this.transform.position = value;
+        }
+    }
+
+    public float MaximumHealthPoint
+    {
+        get
+        {
+            return this.maximumHealthPoint;
+        }
+
+        private set
+        {
+            this.maximumHealthPoint = value;
         }
     }
 
