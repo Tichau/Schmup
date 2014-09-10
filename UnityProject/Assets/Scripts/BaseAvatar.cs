@@ -8,6 +8,9 @@ public class BaseAvatar : MonoBehaviour
     private float maximumHealthPoint;
 
     [SerializeField]
+    private float maximumEnergy;
+
+    [SerializeField]
     private float maximumSpeed;
 
     [SerializeField]
@@ -19,6 +22,9 @@ public class BaseAvatar : MonoBehaviour
     [SerializeField]
     private float bulletDamage;
 
+    [SerializeField]
+    private float energyRegenRate;
+    
     [SerializeField]
     private BulletType bulletType;
 
@@ -39,6 +45,38 @@ public class BaseAvatar : MonoBehaviour
         private set
         {
             this.maximumHealthPoint = value;
+        }
+    }
+
+    public float Energy
+    {
+        get;
+        set;
+    }
+
+    public float EnergyRegenRate
+    {
+        get
+        {
+            return this.energyRegenRate;
+        }
+
+        private set
+        {
+            this.energyRegenRate = value;
+        }
+    }
+
+    public float MaximumEnergy
+    {
+        get
+        {
+            return this.maximumEnergy;
+        }
+
+        private set
+        {
+            this.maximumEnergy = value;
         }
     }
 
@@ -138,10 +176,13 @@ public class BaseAvatar : MonoBehaviour
 
     protected virtual void Update()
     {
+        this.Energy += this.EnergyRegenRate * Time.deltaTime;
+        this.Energy = Mathf.Clamp(this.Energy, 0f, this.MaximumEnergy);
     }
 
     private void Start()
     {
-        this.HealthPoint = this.maximumHealthPoint;
+        this.HealthPoint = this.MaximumHealthPoint;
+        this.Energy = this.MaximumEnergy;
     }
 }

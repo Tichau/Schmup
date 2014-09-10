@@ -10,9 +10,25 @@ public class BulletGun : MonoBehaviour
     [SerializeField]
     private bool drawAllowedZoneGizmo;
 
+    [SerializeField]
+    private float energyConsumedPerBullet;
+
     private BaseAvatar baseAvatar;
 
     private float lastFireTime = 0f;
+
+    public float EnergyConsumedPerBullet
+    {
+        get
+        {
+            return this.energyConsumedPerBullet;
+        }
+
+        private set
+        {
+            this.energyConsumedPerBullet = value;
+        }
+    }
 
     private Vector2 BulletSpawnPosition
     {
@@ -46,6 +62,14 @@ public class BulletGun : MonoBehaviour
             // The bullet gun is in cooldown, it can't fire.
             return;
         }
+
+        if (this.baseAvatar.Energy < this.EnergyConsumedPerBullet)
+        {
+            // Not enough energy to fire a bullet.
+            return;
+        }
+
+        this.baseAvatar.Energy -= this.EnergyConsumedPerBullet;
 
         Vector2 speed = new Vector2(this.baseAvatar.BulletSpeed * Mathf.Cos(this.Angle), this.baseAvatar.BulletSpeed * Mathf.Sin(this.Angle));
 
