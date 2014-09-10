@@ -17,6 +17,9 @@ public class GUIManager : MonoBehaviour
     private Texture energyBarTexture;
 
     [SerializeField]
+    private Texture energyRestoringBarTexture;
+
+    [SerializeField]
     private GUISkin guiSkin;
 
     private void OnGUI()
@@ -35,7 +38,7 @@ public class GUIManager : MonoBehaviour
 
             // Energy Bar.
             float energyRatio = playerAvatar.Energy / playerAvatar.MaximumEnergy;
-            GUI.DrawTexture(new Rect(0f, Screen.height - barHeight, Screen.width * energyRatio, barHeight), this.energyBarTexture);
+            GUI.DrawTexture(new Rect(0f, Screen.height - barHeight, Screen.width * energyRatio, barHeight), playerAvatar.IsEnergyRestoring ? this.energyRestoringBarTexture : this.energyBarTexture);
         }
     }
 }

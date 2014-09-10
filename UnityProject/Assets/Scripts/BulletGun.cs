@@ -116,6 +116,11 @@ public class BulletGun : MonoBehaviour
 
     public void Fire()
     {
+        if (!this.baseAvatar.CanFire())
+        {
+            return;
+        }
+
         if (this.RateOfFire <= 0f)
         {
             // The avatar has a nul rate of fire, The bullet gun can't fire.

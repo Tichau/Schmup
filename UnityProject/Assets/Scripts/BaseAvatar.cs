@@ -1,9 +1,13 @@
 ﻿// <copyright file="BaseAvatar.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
 
+using System;
+
 using UnityEngine;
 
 public class BaseAvatar : MonoBehaviour
 {
+    private const float EnergyEpsilon = 1f;
+
     [SerializeField]
     private float maximumHealthPoint;
 
@@ -21,6 +25,9 @@ public class BaseAvatar : MonoBehaviour
 
     private BulletGun[] bulletGuns;
 
+    private float energyRegenEfficiency = 1f;
+    private float energy;
+    
     //// Statistics.
     public float HealthPoint
     {
@@ -43,8 +50,19 @@ public class BaseAvatar : MonoBehaviour
 
     public float Energy
     {
-        get;
-        set;
+        get
+        {
+            return this.energy;
+        }
+
+        set
+        {
+            this.energy = value;
+            if (this.energy < BaseAvatar.EnergyEpsilon)
+            {
+                this.StartEnergyRestoringProcess();
+            }
+        }
     }
 
     public float EnergyRegenRate
@@ -113,6 +131,12 @@ public class BaseAvatar : MonoBehaviour
         }
     }
 
+    public bool IsEnergyRestoring
+    {
+        get;
+        private set;
+    }
+
     public void TakeDamage(float damage)
     {
         this.HealthPoint -= damage;
@@ -121,6 +145,16 @@ public class BaseAvatar : MonoBehaviour
         {
             this.Die();
         }
+    }
+
+    public bool CanFire()
+    {
+        if (this.IsEnergyRestoring)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     protected virtual void Die()
@@ -140,9 +174,26 @@ public class BaseAvatar : MonoBehaviour
         if (!isSomeBulletGunFiring)
         {
             // The energy regen only if no gun are firing.
-            this.Energy += this.EnergyRegenRate * Time.deltaTime;
+            this.Energy += this.EnergyRegenRate * this.energyRegenEfficiency * Time.deltaTime;
             this.Energy = Mathf.Clamp(this.Energy, 0f, this.MaximumEnergy);
+
+            if (this.IsEnergyRestoring && Math.Abs(this.Energy - this.MaximumEnergy) < BaseAvatar.EnergyEpsilon)
+            {
+                this.EndEnergyRestoringProcess();
+            }
         }
+    }
+
+    private void StartEnergyRestoringProcess()
+    {
+        this.IsEnergyRestoring = true;
+        this.energyRegenEfficiency = 0.75f;
+    }
+
+    private void EndEnergyRestoringProcess()
+    {
+        this.IsEnergyRestoring = false;
+        this.energyRegenEfficiency = 1f;
     }
 
     private void Start()
