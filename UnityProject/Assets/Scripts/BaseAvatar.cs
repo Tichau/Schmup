@@ -17,9 +17,6 @@ public class BaseAvatar : MonoBehaviour
     private float bulletSpeed;
 
     [SerializeField]
-    private float rateOfFire;
-
-    [SerializeField]
     private float bulletDamage;
 
     [SerializeField]
@@ -27,6 +24,8 @@ public class BaseAvatar : MonoBehaviour
     
     [SerializeField]
     private BulletType bulletType;
+
+    private BulletGun[] bulletGuns;
 
     //// Statistics.
     public float HealthPoint
@@ -106,19 +105,6 @@ public class BaseAvatar : MonoBehaviour
         }
     }
 
-    public float RateOfFire
-    {
-        get
-        {
-            return this.rateOfFire;
-        }
-
-        private set
-        {
-            this.rateOfFire = value;
-        }
-    }
-
     public float BulletDamage
     {
         get
@@ -176,13 +162,32 @@ public class BaseAvatar : MonoBehaviour
 
     protected virtual void Update()
     {
-        this.Energy += this.EnergyRegenRate * Time.deltaTime;
-        this.Energy = Mathf.Clamp(this.Energy, 0f, this.MaximumEnergy);
+        // Energy regen.
+        bool isSomeBulletGunFiring = false;
+        for (int index = 0; index < this.bulletGuns.Length; index++)
+        {
+            isSomeBulletGunFiring |= this.bulletGuns[index].IsFiring;
+        }
+
+        if (!isSomeBulletGunFiring)
+        {
+            // The energy regen only if no gun are firing.
+            this.Energy += this.EnergyRegenRate * Time.deltaTime;
+            this.Energy = Mathf.Clamp(this.Energy, 0f, this.MaximumEnergy);
+        }
     }
 
     private void Start()
     {
         this.HealthPoint = this.MaximumHealthPoint;
         this.Energy = this.MaximumEnergy;
+
+        // Retrieve the bullet guns of the game object.
+        this.bulletGuns = this.GetComponents<BulletGun>();
+
+        if (this.bulletGuns == null || this.bulletGuns.Length == 0)
+        {
+            Debug.LogWarning("There is no bullet guns on the avatar.");
+        }
     }
 }

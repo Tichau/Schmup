@@ -13,9 +13,25 @@ public class BulletGun : MonoBehaviour
     [SerializeField]
     private float energyConsumedPerBullet;
 
+    [SerializeField]
+    private float rateOfFire;
+
     private BaseAvatar baseAvatar;
 
     private float lastFireTime = 0f;
+
+    public float RateOfFire
+    {
+        get
+        {
+            return this.rateOfFire;
+        }
+
+        private set
+        {
+            this.rateOfFire = value;
+        }
+    }
 
     public float EnergyConsumedPerBullet
     {
@@ -27,6 +43,25 @@ public class BulletGun : MonoBehaviour
         private set
         {
             this.energyConsumedPerBullet = value;
+        }
+    }
+
+    public bool IsFiring
+    {
+        get
+        {
+            if (this.RateOfFire > 0f)
+            {
+                float durationBetweenTwoBullets = 1f / this.RateOfFire;
+
+                if (Time.time < this.lastFireTime + durationBetweenTwoBullets)
+                {
+                    // The bullet gun is in cooldown.
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
@@ -49,15 +84,13 @@ public class BulletGun : MonoBehaviour
 
     public void Fire()
     {
-        if (this.baseAvatar.RateOfFire <= 0f)
+        if (this.RateOfFire <= 0f)
         {
             // The avatar has a nul rate of fire, The bullet gun can't fire.
             return;
         }
 
-        float durationBetweenTwoBullets = 1f / this.baseAvatar.RateOfFire;
-
-        if (Time.time < this.lastFireTime + durationBetweenTwoBullets)
+        if (this.IsFiring)
         {
             // The bullet gun is in cooldown, it can't fire.
             return;
