@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class BulletGun : MonoBehaviour
 {
+    public string WeaponName;
+
     protected BaseAvatar baseAvatar;
 
     [SerializeField]
@@ -102,6 +104,11 @@ public abstract class BulletGun : MonoBehaviour
 
     public virtual bool CanFire()
     {
+        if (!this.enabled)
+        {
+            return false;
+        }
+
         if (!this.baseAvatar.CanFire())
         {
             return false;
@@ -119,11 +126,12 @@ public abstract class BulletGun : MonoBehaviour
             return false;
         }
 
-        if (this.baseAvatar.Energy < this.EnergyConsumedPerBullet)
-        {
-            // Not enough energy to fire a bullet.
-            return false;
-        }
+        // We don't want this anymore because of the rule of energy restoring.
+        ////if (this.baseAvatar.Energy < this.EnergyConsumedPerBullet)
+        ////{
+        ////    // Not enough energy to fire a bullet.
+        ////    return false;
+        ////}
 
         return true;
     }

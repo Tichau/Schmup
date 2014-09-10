@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BaseAvatar : MonoBehaviour
 {
+    protected BulletGun[] bulletGuns;
+
     private const float EnergyEpsilon = 1f;
 
     [SerializeField]
@@ -22,8 +24,6 @@ public class BaseAvatar : MonoBehaviour
     
     [SerializeField]
     private BulletType bulletType;
-
-    private BulletGun[] bulletGuns;
 
     private float energyRegenEfficiency = 1f;
     private float energy;
@@ -162,6 +162,20 @@ public class BaseAvatar : MonoBehaviour
         GameObject.Destroy(this.gameObject);
     }
 
+    protected virtual void Start()
+    {
+        this.HealthPoint = this.MaximumHealthPoint;
+        this.Energy = this.MaximumEnergy;
+
+        // Retrieve the bullet guns of the game object.
+        this.bulletGuns = this.GetComponents<BulletGun>();
+
+        if (this.bulletGuns == null || this.bulletGuns.Length == 0)
+        {
+            Debug.LogWarning("There is no bullet guns on the avatar.");
+        }
+    }
+
     protected virtual void Update()
     {
         // Energy regen.
@@ -194,19 +208,5 @@ public class BaseAvatar : MonoBehaviour
     {
         this.IsEnergyRestoring = false;
         this.energyRegenEfficiency = 1f;
-    }
-
-    private void Start()
-    {
-        this.HealthPoint = this.MaximumHealthPoint;
-        this.Energy = this.MaximumEnergy;
-
-        // Retrieve the bullet guns of the game object.
-        this.bulletGuns = this.GetComponents<BulletGun>();
-
-        if (this.bulletGuns == null || this.bulletGuns.Length == 0)
-        {
-            Debug.LogWarning("There is no bullet guns on the avatar.");
-        }
     }
 }

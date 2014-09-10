@@ -7,8 +7,18 @@ public class InputController : MonoBehaviour
     private Engines engines;
     private BulletGun[] bulletGuns;
 
+    private PlayerAvatar playerAvatar;
+
     private void Start()
     {
+        // Retrieve the player avatar of the game object.
+        this.playerAvatar = this.GetComponent<PlayerAvatar>();
+
+        if (this.playerAvatar == null)
+        {
+            Debug.LogWarning("There is no player avatar on the game object.");
+        }
+
         // Retrieve the engines of the game object.
         this.engines = this.GetComponent<Engines>();
 
@@ -46,6 +56,14 @@ public class InputController : MonoBehaviour
                 {
                     bulletGun.TryToFire();
                 }
+            }
+        }
+
+        if (this.playerAvatar != null)
+        {
+            if (Input.GetAxis("SwitchWeapon") > 0f)
+            {
+                this.playerAvatar.SwitchToNextWeapon();
             }
         }
     }
