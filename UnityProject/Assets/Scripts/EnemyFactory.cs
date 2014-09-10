@@ -13,6 +13,9 @@ public class EnemyFactory : MonoBehaviour
     [SerializeField]
     private GameObject defaultEnemyPrefab;
 
+    [SerializeField]
+    private GameObject tripleGunsEnemyPrefab;
+
     private static EnemyFactory Instance
     {
         get;
@@ -38,6 +41,10 @@ public class EnemyFactory : MonoBehaviour
             {
                 case EnemyType.Default:
                     gameObject = (GameObject)GameObject.Instantiate(Instance.defaultEnemyPrefab, position, rotation);
+                    break;
+
+                case EnemyType.TripleGuns:
+                    gameObject = (GameObject)GameObject.Instantiate(Instance.tripleGunsEnemyPrefab, position, rotation);
                     break;
             }
 

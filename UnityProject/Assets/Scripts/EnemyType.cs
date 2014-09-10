@@ -3,4 +3,5 @@
 public enum EnemyType
 {
     Default,
+    TripleGuns
 }

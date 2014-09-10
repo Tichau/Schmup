@@ -6,10 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject playerPrefab;
-
-    [SerializeField]
-    private GameObject enemyPrefab;
-
+    
     [SerializeField]
     private float rateOfEnemySpawn = 0.2f;
 
@@ -65,8 +62,14 @@ public class GameManager : MonoBehaviour
         }
         
         // Spawn an enemy.
+        EnemyType enemyType = EnemyType.Default;
+        if (Random.value < 0.2f)
+        {
+            enemyType = EnemyType.TripleGuns;
+        }
+
         float randomY = Random.Range(-4f, 4f);
-        EnemyFactory.GetEnemy(new Vector3(10f, randomY), Quaternion.Euler(0f, 0f, 180f), EnemyType.Default);
+        EnemyFactory.GetEnemy(new Vector3(10f, randomY), Quaternion.Euler(0f, 0f, 180f), enemyType);
         this.lastEnemySpawnTime = Time.time;
 
         // Up the difficulty.

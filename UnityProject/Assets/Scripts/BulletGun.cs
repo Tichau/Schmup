@@ -25,7 +25,7 @@ public class BulletGun : MonoBehaviour
     private BulletType bulletType;
 
     [SerializeField]
-    private bool drawAllowedZoneGizmo;
+    private bool drawCanonsGizmo;
 
     [SerializeField]
     private CanonDescription[] canonDescriptions;
@@ -218,7 +218,7 @@ public class BulletGun : MonoBehaviour
     protected void Update()
     {
 #if UNITY_EDITOR
-        if (this.drawAllowedZoneGizmo)
+        if (this.drawCanonsGizmo)
         {
             for (int index = 0; index < this.canonDescriptions.Length; index++)
             {
