@@ -27,7 +27,9 @@ public class BaseAvatar : MonoBehaviour
     
     private float energyRegenEfficiency = 1f;
     private float energy;
-    
+
+    public event EventHandler<DamageTakenEventArgs> OnDamageTaken;
+
     //// Statistics.
     public float HealthPoint
     {
@@ -139,6 +141,11 @@ public class BaseAvatar : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (this.OnDamageTaken != null && damage > 0)
+        {
+            this.OnDamageTaken.Invoke(this, new DamageTakenEventArgs(damage));
+        }
+
         this.HealthPoint -= damage;
 
         if (this.HealthPoint <= 0f)
