@@ -10,6 +10,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float rateOfEnemySpawn = 0.2f;
 
+    [SerializeField]
+    private float maximumRateOfEnemySpawn = 1f;
+
+    [SerializeField]
+    private float rateOfEnemySpawnIncreaseStep = 0.02f;
+
     private double lastEnemySpawnTime;
 
     public static GameManager Instance
@@ -73,6 +79,6 @@ public class GameManager : MonoBehaviour
         this.lastEnemySpawnTime = Time.time;
 
         // Up the difficulty.
-        this.rateOfEnemySpawn += this.rateOfEnemySpawn > 1f ? 0f : 0.02f;
+        this.rateOfEnemySpawn += this.rateOfEnemySpawn > this.maximumRateOfEnemySpawn ? 0f : this.rateOfEnemySpawnIncreaseStep;
     }
 }

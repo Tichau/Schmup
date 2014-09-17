@@ -25,6 +25,9 @@ public class BaseAvatar : MonoBehaviour
     [SerializeField]
     private float damageDealthAtCollision;
     
+    [SerializeField]
+    private float energyRegenEfficiencyDuringRestoringProcess;
+
     private float energyRegenEfficiency = 1f;
     private float energy;
 
@@ -208,7 +211,7 @@ public class BaseAvatar : MonoBehaviour
     private void StartEnergyRestoringProcess()
     {
         this.IsEnergyRestoring = true;
-        this.energyRegenEfficiency = 0.75f;
+        this.energyRegenEfficiency = this.energyRegenEfficiencyDuringRestoringProcess;
     }
 
     private void EndEnergyRestoringProcess()
