@@ -9,13 +9,7 @@ public class EnemyFactory : MonoBehaviour
     private int enemyCount = 0;
 
     private Dictionary<string, Queue<EnemyAvatar>> availableEnemiesByType = new Dictionary<string, Queue<EnemyAvatar>>();
-
-    [SerializeField]
-    private GameObject defaultEnemyPrefab;
-
-    [SerializeField]
-    private GameObject tripleGunsEnemyPrefab;
-
+    
     private static EnemyFactory Instance
     {
         get;
@@ -74,14 +68,5 @@ public class EnemyFactory : MonoBehaviour
         }
 
         Instance = this;
-    }
-
-    private void Start()
-    {
-        if (this.defaultEnemyPrefab == null)
-        {
-            Debug.LogError("An enemy prefab is not set.");
-            return;
-        }
     }
 }
