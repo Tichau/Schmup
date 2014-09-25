@@ -8,7 +8,7 @@ public class EnemyFactory : MonoBehaviour
 {
     private int enemyCount = 0;
 
-    private Dictionary<EnemyType, Queue<EnemyAvatar>> availableEnemiesByType = new Dictionary<EnemyType, Queue<EnemyAvatar>>();
+    private Dictionary<string, Queue<EnemyAvatar>> availableEnemiesByType = new Dictionary<string, Queue<EnemyAvatar>>();
 
     [SerializeField]
     private GameObject defaultEnemyPrefab;
@@ -22,9 +22,14 @@ public class EnemyFactory : MonoBehaviour
         set;
     }
 
-    public static EnemyAvatar GetEnemy(Vector2 position, Quaternion rotation, EnemyType enemyType)
+    public static EnemyAvatar GetEnemy(Vector2 position, Quaternion rotation, string prefabPath)
     {
-        Queue<EnemyAvatar> availableEnemies = EnemyFactory.Instance.availableEnemiesByType[enemyType];
+        if (!EnemyFactory.Instance.availableEnemiesByType.ContainsKey(prefabPath))
+        {
+            EnemyFactory.Instance.availableEnemiesByType.Add(prefabPath, new Queue<EnemyAvatar>());
+        }
+
+        Queue<EnemyAvatar> availableEnemies = EnemyFactory.Instance.availableEnemiesByType[prefabPath];
 
         EnemyAvatar enemy = null;
         if (availableEnemies.Count > 0)
@@ -37,19 +42,12 @@ public class EnemyFactory : MonoBehaviour
             // Instantiate a new bullet.
             GameObject gameObject = null;
 
-            switch (enemyType)
-            {
-                case EnemyType.Default:
-                    gameObject = (GameObject)GameObject.Instantiate(Instance.defaultEnemyPrefab, position, rotation);
-                    break;
-
-                case EnemyType.TripleGuns:
-                    gameObject = (GameObject)GameObject.Instantiate(Instance.tripleGunsEnemyPrefab, position, rotation);
-                    break;
-            }
+            GameObject prefab = (GameObject)Resources.Load(prefabPath);
+            gameObject = (GameObject)GameObject.Instantiate(prefab, position, rotation);
 
             gameObject.transform.parent = EnemyFactory.Instance.gameObject.transform;
             enemy = gameObject.GetComponent<EnemyAvatar>();
+            enemy.PrefabPath = prefabPath;
             EnemyFactory.Instance.enemyCount++;
             Debug.Log("Number of enemies instantiated = " + EnemyFactory.Instance.enemyCount);
         }
@@ -62,7 +60,7 @@ public class EnemyFactory : MonoBehaviour
 
     public static void ReleaseBullet(EnemyAvatar enemyAvatar)
     {
-        Queue<EnemyAvatar> availableEnemies = EnemyFactory.Instance.availableEnemiesByType[enemyAvatar.Type];
+        Queue<EnemyAvatar> availableEnemies = EnemyFactory.Instance.availableEnemiesByType[enemyAvatar.PrefabPath];
         enemyAvatar.gameObject.SetActive(false);
         availableEnemies.Enqueue(enemyAvatar);
     }
@@ -76,11 +74,6 @@ public class EnemyFactory : MonoBehaviour
         }
 
         Instance = this;
-
-        foreach (object value in System.Enum.GetValues(typeof(EnemyType)))
-        {
-            this.availableEnemiesByType.Add((EnemyType)value, new Queue<EnemyAvatar>());
-        }
     }
 
     private void Start()

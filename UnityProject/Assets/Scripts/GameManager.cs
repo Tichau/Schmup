@@ -1,5 +1,7 @@
 ﻿// <copyright file="GameManager.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
 
+using System.Collections.Generic;
+
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,9 +18,23 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float rateOfEnemySpawnIncreaseStep = 0.02f;
 
+    [SerializeField]
+    private TextAsset levelsDatabase;
+
     private double lastEnemySpawnTime;
 
+    private int currentLevelIndex = -1;
+    private float currentLevelStartDate;
+
+    private List<LevelDescription> levelDatabase;
+
     public static GameManager Instance
+    {
+        get;
+        private set;
+    }
+
+    public Level CurrentLevel
     {
         get;
         private set;
@@ -50,9 +66,70 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("Can't retrieve the PlayerAvatar script.");
         }
+
+        this.levelDatabase = XmlHelpers.LoadFromTextAsset<LevelDescription>(this.levelsDatabase);
+        if (this.levelDatabase != null && this.levelDatabase.Count > 0)
+        {
+            this.StartLevel(this.levelDatabase[0]);
+        }
+    }
+
+    private void StartLevel(LevelDescription levelDescription)
+    {
+        Debug.Log("Start level " + levelDescription.Name);
+        this.currentLevelStartDate = Time.time;
+        this.CurrentLevel = new Level(levelDescription);
     }
     
     private void Update()
+    {
+        // this.RandomSpawn();
+
+        this.ExecuteCurrentLevel();
+    }
+
+    private void ExecuteCurrentLevel()
+    {
+        if (this.CurrentLevel == null)
+        {
+            return;
+        }
+
+        float timePassedSinceBeginning = Time.time - this.currentLevelStartDate;
+        this.CurrentLevel.Update(timePassedSinceBeginning);
+
+        if (this.CurrentLevel.IsFinished(timePassedSinceBeginning))
+        {
+            this.NextLevel();
+        }
+    }
+
+    private void NextLevel()
+    {
+        this.currentLevelIndex++;
+        this.CurrentLevel = null;
+
+        if (this.currentLevelIndex < 0)
+        {
+            return;
+        }
+
+        if (this.levelDatabase == null)
+        {
+            Debug.LogWarning("No levels in database");
+            return;
+        }
+
+        if (this.currentLevelIndex >= this.levelDatabase.Count)
+        {
+            Debug.Log("No remaining level.");
+            return;
+        }
+
+        this.StartLevel(this.levelDatabase[this.currentLevelIndex]);
+    }
+
+    private void RandomSpawn()
     {
         if (this.rateOfEnemySpawn <= 0f)
         {
@@ -66,16 +143,16 @@ public class GameManager : MonoBehaviour
             // The bullet gun is in cooldown, it can't fire.
             return;
         }
-        
+
         // Spawn an enemy.
-        EnemyType enemyType = EnemyType.Default;
+        string prefabPath = "Prefabs/Enemy_01";
         if (Random.value < 0.2f)
         {
-            enemyType = EnemyType.TripleGuns;
+            prefabPath = "Prefabs/Enemy_02";
         }
 
         float randomY = Random.Range(-4f, 4f);
-        EnemyFactory.GetEnemy(new Vector3(10f, randomY), Quaternion.Euler(0f, 0f, 180f), enemyType);
+        EnemyFactory.GetEnemy(new Vector3(10f, randomY), Quaternion.Euler(0f, 0f, 180f), prefabPath);
         this.lastEnemySpawnTime = Time.time;
 
         // Up the difficulty.

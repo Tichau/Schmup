@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class EnemyAvatar : BaseAvatar
 {
-    [SerializeField]
-    private EnemyType type;
-
-    public EnemyType Type
+    public string PrefabPath
     {
-        get
-        {
-            return type;
-        }
-
-        set
-        {
-            type = value;
-        }
+        get;
+        set;
     }
 
     protected override void Die()
