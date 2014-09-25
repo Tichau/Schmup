@@ -12,17 +12,17 @@ public class EnemyAvatar : BaseAvatar
 
     protected override void Die()
     {
-        EnemyFactory.ReleaseBullet(this);
+        EnemyFactory.ReleaseEnemy(this);
     }
 
     protected override void Update()
     {
         base.Update();
 
-        // Very simple test if out of bound bullet.
+        // Very simple out of bound test.
         if (this.Position.x > 14 || this.Position.x < -14 || this.Position.y > 20 || this.Position.y < -20)
         {
-            EnemyFactory.ReleaseBullet(this);
+            EnemyFactory.ReleaseEnemy(this);
         }
     }
 

@@ -52,7 +52,7 @@ public class EnemyFactory : MonoBehaviour
         return enemy;
     }
 
-    public static void ReleaseBullet(EnemyAvatar enemyAvatar)
+    public static void ReleaseEnemy(EnemyAvatar enemyAvatar)
     {
         Queue<EnemyAvatar> availableEnemies = EnemyFactory.Instance.availableEnemiesByType[enemyAvatar.PrefabPath];
         enemyAvatar.gameObject.SetActive(false);
