@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         this.levelDatabase = XmlHelpers.LoadFromTextAsset<LevelDescription>(this.levelsDatabase);
         if (this.levelDatabase != null && this.levelDatabase.Count > 0)
         {
-            this.StartLevel(this.levelDatabase[0]);
+            this.NextLevel();
         }
     }
 
