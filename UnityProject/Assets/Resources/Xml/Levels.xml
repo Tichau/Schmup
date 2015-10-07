@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Datatable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-    <LevelDescription Name="First level" Duration="15">
+    <LevelDescription Name="First level" Duration="20">
         <Scene>Level</Scene>
 
         <EnemyDescription>
@@ -32,7 +32,7 @@
     </LevelDescription>
 
 
-    <LevelDescription Name="Second level" Duration="15">
+    <LevelDescription Name="Second level" Duration="20">
         <Scene>FinalLevel</Scene>
 
         <EnemyDescription>
