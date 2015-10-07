@@ -14,10 +14,19 @@ public class BulletsFactory : MonoBehaviour
     private GameObject playerBulletPrefab;
 
     [SerializeField]
+    private int numberOfPlayerBulletToPreinstantiate;
+
+    [SerializeField]
     private GameObject enemyBulletPrefab;
 
     [SerializeField]
+    private int numberOfEnemyBulletToPreinstantiate;
+
+    [SerializeField]
     private GameObject playerSpiralBulletPrefab;
+
+    [SerializeField]
+    private int numberOfPlayerSpiralBulletToPreinstantiate;
 
     private static BulletsFactory Instance
     {
@@ -38,32 +47,39 @@ public class BulletsFactory : MonoBehaviour
         if (bullet == null)
         {
             // Instantiate a new bullet.
-            GameObject gameObject = null;
-
-            switch (bulletType)
-            {
-                case BulletType.EnemyBullet:
-                    gameObject = (GameObject)GameObject.Instantiate(Instance.enemyBulletPrefab, position, Quaternion.identity);
-                    break;
-
-                case BulletType.PlayerBullet:
-                    gameObject = (GameObject)GameObject.Instantiate(Instance.playerBulletPrefab, position, Quaternion.identity);
-                    break;
-
-                case BulletType.PlayerSpiralBullet:
-                    gameObject = (GameObject)GameObject.Instantiate(Instance.playerSpiralBulletPrefab, position, Quaternion.identity);
-                    break;
-            }
-
-            gameObject.transform.parent = BulletsFactory.Instance.gameObject.transform;
-            bullet = gameObject.GetComponent<Bullet>();
-            BulletsFactory.Instance.bulletCount++;
-            Debug.Log("Number of bullet instantiated = " + BulletsFactory.Instance.bulletCount);
+            bullet = InstantiateBullet(bulletType);
+            Debug.Log("Number of bullet instantiated = " + BulletsFactory.Instance.bulletCount + "\n" + bulletType.ToString());
         }
 
         bullet.Position = position;
         bullet.gameObject.SetActive(true);
 
+        return bullet;
+    }
+
+    private static Bullet InstantiateBullet(BulletType bulletType)
+    {
+        GameObject gameObject = null;
+
+        switch (bulletType)
+        {
+            case BulletType.EnemyBullet:
+                gameObject = (GameObject) GameObject.Instantiate(Instance.enemyBulletPrefab);
+                break;
+
+            case BulletType.PlayerBullet:
+                gameObject = (GameObject) GameObject.Instantiate(Instance.playerBulletPrefab);
+                break;
+
+            case BulletType.PlayerSpiralBullet:
+                gameObject = (GameObject) GameObject.Instantiate(Instance.playerSpiralBulletPrefab);
+                break;
+        }
+
+        gameObject.SetActive(false);
+        gameObject.transform.parent = BulletsFactory.Instance.gameObject.transform;
+        Bullet bullet = gameObject.GetComponent<Bullet>();
+        BulletsFactory.Instance.bulletCount++;
         return bullet;
     }
 
@@ -102,6 +118,26 @@ public class BulletsFactory : MonoBehaviour
         {
             Debug.LogError("A bullet prefab is not set.");
             return;
+        }
+
+        PreinstantiateBullets(BulletType.PlayerBullet, this.numberOfPlayerBulletToPreinstantiate);
+        PreinstantiateBullets(BulletType.EnemyBullet, this.numberOfEnemyBulletToPreinstantiate);
+        PreinstantiateBullets(BulletType.PlayerSpiralBullet, this.numberOfPlayerSpiralBulletToPreinstantiate);
+    }
+
+    private static void PreinstantiateBullets(BulletType bulletType, int numberOfBulletsToPreinstantiate)
+    {
+        Queue<Bullet> bullets = BulletsFactory.Instance.availableBulletsByType[bulletType];
+        for (int index = 0; index < numberOfBulletsToPreinstantiate; index++)
+        {
+            Bullet bullet = InstantiateBullet(bulletType);
+            if (bullet == null)
+            {
+                Debug.LogError(string.Format("Failed to instantiate {0} bullets.", numberOfBulletsToPreinstantiate));
+                break;
+            }
+
+            bullets.Enqueue(bullet);
         }
     }
 }
