@@ -169,6 +169,11 @@ public class BaseAvatar : MonoBehaviour
 
     protected virtual void Die()
     {
+        this.Invoke("Release", 0.3f);
+    }
+
+    protected virtual void Release()
+    {
         GameObject.Destroy(this.gameObject);
     }
 

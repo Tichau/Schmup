@@ -1,6 +1,7 @@
 ﻿// <copyright file="EnemyAvatar.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
 
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class EnemyAvatar : BaseAvatar
 {
@@ -9,8 +10,8 @@ public class EnemyAvatar : BaseAvatar
         get;
         set;
     }
-
-    protected override void Die()
+    
+    protected override void Release()
     {
         EnemyFactory.ReleaseEnemy(this);
     }
