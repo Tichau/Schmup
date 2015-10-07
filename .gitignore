@@ -12,3 +12,6 @@ Builds/Builds
 *.userprefs
 /*.pidb
 /*.booproj
+
+UnityProject/Assets/UnityVS*
+UnityProject/*.htm
