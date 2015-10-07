@@ -1,29 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Datatable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-  <LevelDescription Name="First level" Duration="20">   
-    <EnemyDescription>
-      <SpawnDate>2</SpawnDate>
-      <SpawnPosition>
-        <x>10</x>
-        <y>4</y>
-      </SpawnPosition>
-      <PrefabPath>Prefabs/Enemy_01</PrefabPath>
-    </EnemyDescription>
+    <LevelDescription Name="First level" Duration="15">
+        <Scene>Level</Scene>
+
+        <EnemyDescription>
+            <SpawnDate>2</SpawnDate>
+            <SpawnPosition>
+                <x>10</x>
+                <y>3.5</y>
+            </SpawnPosition>
+            <PrefabPath>Prefabs/Enemy_01</PrefabPath>
+        </EnemyDescription>
+        <EnemyDescription>
+            <SpawnDate>4</SpawnDate>
+            <SpawnPosition>
+                <x>10</x>
+                <y>0</y>
+            </SpawnPosition>
+            <PrefabPath>Prefabs/Enemy_01</PrefabPath>
+        </EnemyDescription>
+        <EnemyDescription>
+            <SpawnDate>6</SpawnDate>
+            <SpawnPosition>
+                <x>10</x>
+                <y>-3.5</y>
+            </SpawnPosition>
+            <PrefabPath>Prefabs/Enemy_01</PrefabPath>
+        </EnemyDescription>
+        
+    </LevelDescription>
+
+
+    <LevelDescription Name="Second level" Duration="15">
+        <Scene>FinalLevel</Scene>
+
+        <EnemyDescription>
+            <SpawnDate>3</SpawnDate>
+            <SpawnPosition>
+                <x>10</x>
+                <y>3.5</y>
+            </SpawnPosition>
+            <PrefabPath>Prefabs/Enemy_02</PrefabPath>
+        </EnemyDescription>
+
+        <EnemyDescription>
+            <SpawnDate>2</SpawnDate>
+            <SpawnPosition>
+                <x>10</x>
+                <y>0</y>
+            </SpawnPosition>
+            <PrefabPath>Prefabs/Enemy_01</PrefabPath>
+        </EnemyDescription>
+
+        <EnemyDescription>
+            <SpawnDate>3</SpawnDate>
+            <SpawnPosition>
+                <x>10</x>
+                <y>-3.5</y>
+            </SpawnPosition>
+            <PrefabPath>Prefabs/Enemy_02</PrefabPath>
+        </EnemyDescription>
+    </LevelDescription>
+
+    <LevelDescription Name="Game Over" Duration="10000">
+        <Scene>GameOver</Scene>
+    </LevelDescription>
     
-    <EnemyDescription>
-      <SpawnDate>12</SpawnDate>
-      <SpawnPosition>
-        <x>10</x>
-        <y>-4</y>
-      </SpawnPosition>
-      <PrefabPath>Prefabs/Enemy_02</PrefabPath>
-    </EnemyDescription>
-  </LevelDescription>
-  
-  
-  <LevelDescription Name="Second level" Duration="5">
-       
-  </LevelDescription>
-  
 </Datatable>

@@ -1,23 +1,12 @@
 ﻿// <copyright file="Level.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
 
-using System.Collections;
-
 using UnityEngine;
 
-public class Level
+public class Level : UnityEngine.MonoBehaviour
 {
     private LevelDescription description;
     private EnemyState[] isEnemySpawned;
-
-    public Level(LevelDescription description)
-    {
-        this.description = description;
-        this.isEnemySpawned = new EnemyState[this.description.Enemies != null ? this.description.Enemies.Length : 0];
-        for (int index = 0; index < this.isEnemySpawned.Length; index++)
-        {
-            this.isEnemySpawned[index] = EnemyState.NotSpawned;
-        }
-    }
+    private float currentLevelStartDate;
 
     public enum EnemyState
     {
@@ -32,9 +21,31 @@ public class Level
             return this.description.Name;
         }
     }
-
-    public bool IsFinished(float timePassedSinceBeginning)
+    
+    public void Load(LevelDescription description)
     {
+        this.description = description;
+        this.isEnemySpawned = new EnemyState[this.description.Enemies != null ? this.description.Enemies.Length : 0];
+        for (int index = 0; index < this.isEnemySpawned.Length; index++)
+        {
+            this.isEnemySpawned[index] = EnemyState.NotSpawned;
+        }
+    }
+    
+    public void Release()
+    {
+        this.description = null;
+        this.isEnemySpawned = null;
+    }
+    
+    public void Start()
+    {
+        this.currentLevelStartDate = Time.time; 
+    }
+
+    public bool IsFinished()
+    {
+        float timePassedSinceBeginning = Time.time - this.currentLevelStartDate;
         if (timePassedSinceBeginning >= this.description.Duration)
         {
             return true;
@@ -43,8 +54,15 @@ public class Level
         return false;
     }
 
-    public void Update(float timePassedSinceBeginning)
+    public void Update()
     {
+        float timePassedSinceBeginning = Time.time - this.currentLevelStartDate;
+        
+        if (this.description == null)
+        {
+            return;
+        }
+        
         if (this.description.Enemies == null)
         {
             return;

@@ -153,7 +153,7 @@ public class BulletGun : MonoBehaviour
             return false;
         }
 
-        if (!this.baseAvatar.CanFire())
+        if (this.baseAvatar != null && !this.baseAvatar.CanFire())
         {
             return false;
         }
@@ -182,7 +182,8 @@ public class BulletGun : MonoBehaviour
 
     protected Vector2 GetBulletSpawnPosition(int canonIndex)
     {
-        return (Vector2)this.transform.position + this.canonDescriptions[canonIndex].BulletSpawnOffsetPosition;
+        Vector2 worldOffset = (this.transform.localToWorldMatrix * this.canonDescriptions[canonIndex].BulletSpawnOffsetPosition);
+        return (Vector2)this.transform.position + worldOffset;
     }
 
     protected float GetBulletSpawnAngle(int canonIndex)
@@ -192,7 +193,11 @@ public class BulletGun : MonoBehaviour
 
     protected virtual void Fire()
     {
-        this.baseAvatar.Energy -= this.EnergyConsumedPerBullet;
+        if (this.baseAvatar != null)
+        {
+            this.baseAvatar.Energy -= this.EnergyConsumedPerBullet;
+        }
+
         this.lastFireTime = Time.time;
 
         for (int index = 0; index < this.canonDescriptions.Length; index++)
@@ -215,9 +220,8 @@ public class BulletGun : MonoBehaviour
         }
     }
 
-    protected void Update()
+    protected void OnDrawGizmos()
     {
-#if UNITY_EDITOR
         if (this.drawCanonsGizmo)
         {
             for (int index = 0; index < this.canonDescriptions.Length; index++)
@@ -228,6 +232,5 @@ public class BulletGun : MonoBehaviour
                 Debug.DrawLine(this.GetBulletSpawnPosition(index), this.GetBulletSpawnPosition(index) + speed, Color.red);
             }
         }
-#endif
     }
 }

@@ -28,7 +28,7 @@ public class GUIManager : MonoBehaviour
     private void OnGUI()
     {
         // Level name
-        string currentLevelName = GameManager.Instance.CurrentLevel != null ? GameManager.Instance.CurrentLevel.Name : "Game Over";
+        string currentLevelName = GameManager.Instance.CurrentLevel != null ? GameManager.Instance.CurrentLevel.Name : string.Empty;
         GUI.Label(new Rect(0f, 0f, Screen.width, 60f), currentLevelName, this.guiSkin.label);
 
         // Background.

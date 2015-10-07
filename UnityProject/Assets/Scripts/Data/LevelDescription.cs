@@ -20,6 +20,13 @@ public class LevelDescription
         private set;
     }
 
+    [XmlElement]
+    public string Scene
+    {
+        get;
+        set;
+    }
+
     [XmlAttribute]
     public string Name
     {

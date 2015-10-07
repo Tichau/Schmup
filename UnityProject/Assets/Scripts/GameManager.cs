@@ -1,5 +1,6 @@
 ﻿// <copyright file="GameManager.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
 
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -23,8 +24,8 @@ public class GameManager : MonoBehaviour
 
     private double lastEnemySpawnTime;
 
+    public GameObject currentLevelRoot;
     private int currentLevelIndex = -1;
-    private float currentLevelStartDate;
 
     private List<LevelDescription> levelDatabase;
 
@@ -74,11 +75,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void StartLevel(LevelDescription levelDescription)
+    private IEnumerator StartLevel(LevelDescription levelDescription)
     {
         Debug.Log("Start level " + levelDescription.Name);
-        this.currentLevelStartDate = Time.time;
-        this.CurrentLevel = new Level(levelDescription);
+        
+        // Load level scene.
+        Application.LoadLevelAdditive(levelDescription.Scene);
+
+        while (this.currentLevelRoot == null)
+        {
+            yield return null;
+            this.currentLevelRoot = GameObject.FindWithTag("LevelRoot");
+        }
+
+        // Retrieve level component and initialize it.
+        this.CurrentLevel = this.currentLevelRoot.GetComponent<Level>();
+        if (this.CurrentLevel == null)
+        {
+            Debug.Log("Can't retrieve Level component from the level root game object.");
+            yield break;
+        }
+
+        this.CurrentLevel.Load(levelDescription);
+        this.CurrentLevel.Start();
     }
     
     private void Update()
@@ -95,10 +114,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        float timePassedSinceBeginning = Time.time - this.currentLevelStartDate;
-        this.CurrentLevel.Update(timePassedSinceBeginning);
-
-        if (this.CurrentLevel.IsFinished(timePassedSinceBeginning))
+        if (this.CurrentLevel.IsFinished())
         {
             this.NextLevel();
         }
@@ -106,8 +122,9 @@ public class GameManager : MonoBehaviour
 
     private void NextLevel()
     {
+        this.ReleaseCurrentLevel();
+
         this.currentLevelIndex++;
-        this.CurrentLevel = null;
 
         if (this.currentLevelIndex < 0)
         {
@@ -126,7 +143,19 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        this.StartLevel(this.levelDatabase[this.currentLevelIndex]);
+        this.StartCoroutine(this.StartLevel(this.levelDatabase[this.currentLevelIndex]));
+    }
+
+    private void ReleaseCurrentLevel()
+    {
+        this.CurrentLevel = null;
+
+        if (this.currentLevelRoot != null)
+        {
+            GameObject.Destroy(this.currentLevelRoot);
+        }
+
+        this.currentLevelRoot = null;
     }
 
     private void RandomSpawn()

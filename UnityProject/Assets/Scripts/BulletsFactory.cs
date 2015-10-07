@@ -1,6 +1,5 @@
 ﻿// <copyright file="BulletsFactory.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
 
-using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
