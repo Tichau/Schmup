@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -80,7 +81,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Start level " + levelDescription.Name);
         
         // Load level scene.
-        Application.LoadLevelAdditive(levelDescription.Scene);
+        SceneManager.LoadSceneAsync(levelDescription.Scene, LoadSceneMode.Additive);
 
         while (this.currentLevelRoot == null)
         {

@@ -64,15 +64,15 @@ public class BulletsFactory : MonoBehaviour
         switch (bulletType)
         {
             case BulletType.EnemyBullet:
-                gameObject = (GameObject) GameObject.Instantiate(Instance.enemyBulletPrefab);
+                gameObject = (GameObject)GameObject.Instantiate(Instance.enemyBulletPrefab);
                 break;
 
             case BulletType.PlayerBullet:
-                gameObject = (GameObject) GameObject.Instantiate(Instance.playerBulletPrefab);
+                gameObject = (GameObject)GameObject.Instantiate(Instance.playerBulletPrefab);
                 break;
 
             case BulletType.PlayerSpiralBullet:
-                gameObject = (GameObject) GameObject.Instantiate(Instance.playerSpiralBulletPrefab);
+                gameObject = (GameObject)GameObject.Instantiate(Instance.playerSpiralBulletPrefab);
                 break;
         }
 
