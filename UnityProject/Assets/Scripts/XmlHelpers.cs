@@ -8,58 +8,95 @@ using UnityEngine;
 
 public class XmlHelpers
 {
-    public static List<T> LoadFromTextAsset<T>(TextAsset textAsset, System.Type[] extraTypes = null)
+    /// <summary>
+    /// Create a C# object from a XML text asset.
+    /// </summary>
+    /// <typeparam name="T">The type of object you want to create.</typeparam>
+    /// <param name="textAsset">The XML text asset where the object is serialized.</param>
+    /// <returns>The deserialized C# object.</returns>
+    public static T DeserializeFromXML<T>(TextAsset textAsset)
     {
         if (textAsset == null)
         {
             throw new ArgumentNullException("textAsset");
         }
 
-        System.IO.TextReader textStream = null;
+        try
+        {
+            using (TextReader textStream = new StringReader(textAsset.text))
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(T));
+                T data = (T)serializer.Deserialize(textStream);
+                return data;
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.LogError("Asset of type '" + typeof(T) + "' failed to be deserialized. The following exception was raised:\n " + exception.Message);
+        }
+
+        return default(T);
+    }
+
+    /// <summary>
+    /// Create a database from a XML text asset.
+    /// </summary>
+    /// <typeparam name="T">The type of objects of the database.</typeparam>
+    /// <param name="textAsset">The XML text asset where the database is serialized.</param>
+    /// <returns>A list of deserialized C# objects.</returns>
+    public static List<T> DeserializeDatabaseFromXML<T>(TextAsset textAsset)
+    {
+        if (textAsset == null)
+        {
+            throw new ArgumentNullException("textAsset");
+        }
 
         try
         {
-            textStream = new System.IO.StringReader(textAsset.text);
-
-            XmlRootAttribute xRoot = new XmlRootAttribute
+            using (TextReader textStream = new StringReader(textAsset.text))
             {
-                ElementName = "Datatable"
-            };
+                XmlRootAttribute xRoot = new XmlRootAttribute
+                {
+                    ElementName = "Datatable"
+                };
 
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>), xRoot);
-            List<T> data = serializer.Deserialize(textStream) as List<T>;
-
-            textStream.Close();
-
-            return data;
-        }
-        catch (System.Exception exception)
-        {
-            Debug.LogError("The database of type '" + typeof(T) + "' failed to load the asset. The following exception was raised:\n " + exception.Message);
-        }
-        finally
-        {
-            if (textStream != null)
-            {
-                textStream.Close();
+                XmlSerializer serializer = new XmlSerializer(typeof(List<T>), xRoot);
+                List<T> data = serializer.Deserialize(textStream) as List<T>;
+                return data;
             }
+        }
+        catch (Exception exception)
+        {
+            Debug.LogError("The database of type '" + typeof(T) + "' failed to load the assets. The following exception was raised:\n " + exception.Message);
         }
 
         return null;
     }
 
-    public static void SaveToXML<T>(string path, T objectToSerialize) where T : class
+    /// <summary>
+    /// Create an XML file from a C# object.
+    /// </summary>
+    /// <typeparam name="T">The type of object you want to serialize.</typeparam>
+    /// <param name="path">The path of the XML file.</param>
+    /// <param name="objectToSerialize">The object you want to serialize.</param>
+    public static void SerializeToXML<T>(string path, T objectToSerialize)
     {
         if (string.IsNullOrEmpty(path))
-            return;
-        XmlSerializer serializer = new XmlSerializer(typeof(T));
-        using (StreamWriter stream = new StreamWriter(path, false, new UTF8Encoding(false)))
         {
-            Debug.Log(stream.ToString());
-
-            serializer.Serialize(stream, objectToSerialize);
-            stream.Close();
+            throw new ArgumentNullException("path");
         }
-    }
 
+        try
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StreamWriter stream = new StreamWriter(path, false, new UTF8Encoding(false)))
+            {
+                serializer.Serialize(stream, objectToSerialize);
+            }
+        }
+        catch (Exception exception)
+        {
+            Debug.LogError("Asset of type '" + typeof(T) + "' failed to be serialized. The following exception was raised:\n " + exception.Message);
+        }        
+    }
 }

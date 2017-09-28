@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Can't retrieve the PlayerAvatar script.");
         }
 
-        this.levelDatabase = XmlHelpers.LoadFromTextAsset<LevelDescription>(this.levelsDatabase);
+        this.levelDatabase = XmlHelpers.DeserializeDatabaseFromXML<LevelDescription>(this.levelsDatabase);
         if (this.levelDatabase != null && this.levelDatabase.Count > 0)
         {
             this.NextLevel();
