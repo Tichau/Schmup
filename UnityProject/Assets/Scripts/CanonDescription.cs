@@ -1,4 +1,4 @@
-﻿// <copyright file="CanonDescription.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
+﻿// <copyright file="CanonDescription.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using UnityEngine;
 

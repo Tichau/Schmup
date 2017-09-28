@@ -1,4 +1,4 @@
-﻿// <copyright file="GUIManager.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
+﻿// <copyright file="GUIManager.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using UnityEngine;
 
@@ -32,17 +32,17 @@ public class GUIManager : MonoBehaviour
         GUI.Label(new Rect(0f, 0f, Screen.width, 60f), currentLevelName, this.guiSkin.label);
 
         // Background.
-        GUI.DrawTexture(new Rect(0f, Screen.height - guiHeight, Screen.width, guiHeight), this.backgroundTexture);
+        GUI.DrawTexture(new Rect(0f, Screen.height - this.guiHeight, Screen.width, this.guiHeight), this.backgroundTexture);
 
         PlayerAvatar playerAvatar = GameManager.Instance.PlayerAvatar;
         if (playerAvatar != null)
         {
-            float barHeight = guiHeight / 2f;
-            int barWidth = Screen.width - guiHeight;
+            float barHeight = this.guiHeight / 2f;
+            int barWidth = Screen.width - this.guiHeight;
 
             // HP Bar.
             float healthRatio = playerAvatar.HealthPoint / playerAvatar.MaximumHealthPoint;
-            GUI.DrawTexture(new Rect(0f, Screen.height - guiHeight, barWidth * healthRatio, barHeight), this.healthBarTexture);
+            GUI.DrawTexture(new Rect(0f, Screen.height - this.guiHeight, barWidth * healthRatio, barHeight), this.healthBarTexture);
 
             // Energy Bar.
             float energyRatio = playerAvatar.Energy / playerAvatar.MaximumEnergy;
@@ -55,7 +55,7 @@ public class GUIManager : MonoBehaviour
                 this.lastSelectedWeaponName = playerAvatar.SelectedWeaponName;
             }
 
-            GUI.DrawTexture(new Rect(barWidth, Screen.height - guiHeight, guiHeight, guiHeight), this.selectedWeaponTexture);
+            GUI.DrawTexture(new Rect(barWidth, Screen.height - this.guiHeight, this.guiHeight, this.guiHeight), this.selectedWeaponTexture);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿// <copyright file="BulletGun.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
+﻿// <copyright file="BulletGun.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using UnityEngine;
 
@@ -88,12 +88,12 @@ public class BulletGun : MonoBehaviour
     {
         get
         {
-            return weaponName;
+            return this.weaponName;
         }
 
         private set
         {
-            weaponName = value;
+            this.weaponName = value;
         }
     }
 
@@ -101,12 +101,12 @@ public class BulletGun : MonoBehaviour
     {
         get
         {
-            return bulletType;
+            return this.bulletType;
         }
 
         private set
         {
-            bulletType = value;
+            this.bulletType = value;
         }
     }
 
@@ -182,7 +182,7 @@ public class BulletGun : MonoBehaviour
 
     protected Vector2 GetBulletSpawnPosition(int canonIndex)
     {
-        Vector2 worldOffset = (this.transform.localToWorldMatrix * this.canonDescriptions[canonIndex].BulletSpawnOffsetPosition);
+        Vector2 worldOffset = this.transform.localToWorldMatrix * this.canonDescriptions[canonIndex].BulletSpawnOffsetPosition;
         return (Vector2)this.transform.position + worldOffset;
     }
 

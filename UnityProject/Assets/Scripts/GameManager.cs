@@ -1,4 +1,4 @@
-﻿// <copyright file="GameManager.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
+﻿// <copyright file="GameManager.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using System.Collections;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     private double lastEnemySpawnTime;
 
-    public GameObject currentLevelRoot;
+    private GameObject currentLevelRoot;
     private int currentLevelIndex = -1;
 
     private List<LevelDescription> levelDatabase;
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     
     private void Update()
     {
-        // this.RandomSpawn();
+        //// this.RandomSpawn();
 
         this.ExecuteCurrentLevel();
     }

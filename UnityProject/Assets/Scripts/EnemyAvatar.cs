@@ -1,4 +1,4 @@
-﻿// <copyright file="EnemyAvatar.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
+﻿// <copyright file="EnemyAvatar.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using UnityEngine;
 using UnityEngine.Assertions.Must;

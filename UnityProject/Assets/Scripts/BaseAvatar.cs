@@ -1,4 +1,4 @@
-﻿// <copyright file="BaseAvatar.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
+﻿// <copyright file="BaseAvatar.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using System;
 

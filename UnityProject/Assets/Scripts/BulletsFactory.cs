@@ -1,4 +1,4 @@
-﻿// <copyright file="BulletsFactory.cs" company="1WeekEndStudio">Copyright 1WeekEndStudio. All rights reserved.</copyright>
+﻿// <copyright file="BulletsFactory.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using System.Collections.Generic;
 
@@ -57,6 +57,29 @@ public class BulletsFactory : MonoBehaviour
         return bullet;
     }
 
+    public static void ReleaseBullet(Bullet bullet)
+    {
+        Queue<Bullet> availableBullets = BulletsFactory.Instance.availableBulletsByType[bullet.Type];
+        bullet.gameObject.SetActive(false);
+        availableBullets.Enqueue(bullet);
+    }
+
+    private static void PreinstantiateBullets(BulletType bulletType, int numberOfBulletsToPreinstantiate)
+    {
+        Queue<Bullet> bullets = BulletsFactory.Instance.availableBulletsByType[bulletType];
+        for (int index = 0; index < numberOfBulletsToPreinstantiate; index++)
+        {
+            Bullet bullet = InstantiateBullet(bulletType);
+            if (bullet == null)
+            {
+                Debug.LogError(string.Format("Failed to instantiate {0} bullets.", numberOfBulletsToPreinstantiate));
+                break;
+            }
+
+            bullets.Enqueue(bullet);
+        }
+    }
+
     private static Bullet InstantiateBullet(BulletType bulletType)
     {
         GameObject gameObject = null;
@@ -81,13 +104,6 @@ public class BulletsFactory : MonoBehaviour
         Bullet bullet = gameObject.GetComponent<Bullet>();
         BulletsFactory.Instance.bulletCount++;
         return bullet;
-    }
-
-    public static void ReleaseBullet(Bullet bullet)
-    {
-        Queue<Bullet> availableBullets = BulletsFactory.Instance.availableBulletsByType[bullet.Type];
-        bullet.gameObject.SetActive(false);
-        availableBullets.Enqueue(bullet);
     }
 
     private void Awake()
@@ -123,21 +139,5 @@ public class BulletsFactory : MonoBehaviour
         PreinstantiateBullets(BulletType.PlayerBullet, this.numberOfPlayerBulletToPreinstantiate);
         PreinstantiateBullets(BulletType.EnemyBullet, this.numberOfEnemyBulletToPreinstantiate);
         PreinstantiateBullets(BulletType.PlayerSpiralBullet, this.numberOfPlayerSpiralBulletToPreinstantiate);
-    }
-
-    private static void PreinstantiateBullets(BulletType bulletType, int numberOfBulletsToPreinstantiate)
-    {
-        Queue<Bullet> bullets = BulletsFactory.Instance.availableBulletsByType[bulletType];
-        for (int index = 0; index < numberOfBulletsToPreinstantiate; index++)
-        {
-            Bullet bullet = InstantiateBullet(bulletType);
-            if (bullet == null)
-            {
-                Debug.LogError(string.Format("Failed to instantiate {0} bullets.", numberOfBulletsToPreinstantiate));
-                break;
-            }
-
-            bullets.Enqueue(bullet);
-        }
     }
 }
