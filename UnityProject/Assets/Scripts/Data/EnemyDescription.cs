@@ -1,30 +1,33 @@
 ﻿// <copyright file="EnemyDescription.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
-using System.Xml.Serialization;
-using UnityEngine;
-
-[XmlRoot("EnemyDescription")]
-[XmlType("EnemyDescription")]
-public class EnemyDescription
+namespace Data
 {
-    [XmlElement]
-    public float SpawnDate
-    {
-        get;
-        private set;
-    }
+    using System.Xml.Serialization;
+    using UnityEngine;
 
-    [XmlElement]
-    public Vector2 SpawnPosition
+    [XmlRoot("EnemyDescription")]
+    [XmlType("EnemyDescription")]
+    public class EnemyDescription
     {
-        get;
-        private set;
-    }
+        [XmlElement]
+        public float SpawnDate
+        {
+            get;
+            private set;
+        }
 
-    [XmlElement]
-    public string PrefabPath
-    {
-        get;
-        private set;
+        [XmlElement]
+        public Vector2 SpawnPosition
+        {
+            get;
+            private set;
+        }
+
+        [XmlElement]
+        public string PrefabPath
+        {
+            get;
+            private set;
+        }
     }
 }

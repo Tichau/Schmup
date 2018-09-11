@@ -1,36 +1,39 @@
 ﻿// <copyright file="LevelDescription.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
-using System.Xml.Serialization;
-
-[XmlRoot("LevelDescription")]
-[XmlType("LevelDescription")]
-public class LevelDescription
+namespace Data
 {
-    [XmlAttribute]
-    public float Duration
-    {
-        get;
-        set;
-    }
+    using System.Xml.Serialization;
 
-    [XmlElement("EnemyDescription", typeof(EnemyDescription))]
-    public EnemyDescription[] Enemies
+    [XmlRoot("LevelDescription")]
+    [XmlType("LevelDescription")]
+    public class LevelDescription
     {
-        get;
-        private set;
-    }
+        [XmlAttribute]
+        public float Duration
+        {
+            get;
+            set;
+        }
 
-    [XmlElement]
-    public string Scene
-    {
-        get;
-        set;
-    }
+        [XmlElement("EnemyDescription", typeof(EnemyDescription))]
+        public EnemyDescription[] Enemies
+        {
+            get;
+            private set;
+        }
 
-    [XmlAttribute]
-    public string Name
-    {
-        get;
-        set;
+        [XmlElement]
+        public string Scene
+        {
+            get;
+            set;
+        }
+
+        [XmlAttribute]
+        public string Name
+        {
+            get;
+            set;
+        }
     }
 }

@@ -2,9 +2,10 @@
 
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+using Data;
 
 public class GameManager : MonoBehaviour
 {

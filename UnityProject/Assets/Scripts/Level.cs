@@ -2,6 +2,8 @@
 
 using UnityEngine;
 
+using Data;
+
 public class Level : UnityEngine.MonoBehaviour
 {
     private LevelDescription description;
