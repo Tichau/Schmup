@@ -16,6 +16,19 @@ public class EnemyFactory : MonoBehaviour
         set;
     }
 
+#if UNITY_EDITOR
+    public static int GetCount(string enemyType)
+    {
+        Queue<EnemyAvatar> queue;
+        if (EnemyFactory.Instance.availableEnemiesByType.TryGetValue(enemyType, out queue))
+        {
+            return queue.Count;
+        }
+
+        return 0;
+    }
+#endif
+
     public static EnemyAvatar GetEnemy(Vector2 position, Quaternion rotation, string prefabPath)
     {
         if (!EnemyFactory.Instance.availableEnemiesByType.ContainsKey(prefabPath))
