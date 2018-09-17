@@ -1,61 +1,107 @@
 ﻿// <copyright file="GUIManager.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GUIManager : MonoBehaviour
 {
     [SerializeField]
-    private int guiHeight = 30;
+    private Text levelName;
 
     [SerializeField]
-    private Texture backgroundTexture;
+    private Image healthBar;
 
     [SerializeField]
-    private Texture healthBarTexture;
+    private Image energyBar;
 
     [SerializeField]
-    private Texture energyBarTexture;
+    private Image weaponType;
 
     [SerializeField]
-    private Texture energyRestoringBarTexture;
+    private Color energyBarRestoringColor;
 
     [SerializeField]
-    private GUISkin guiSkin;
+    private Sprite simpleGunSprite;
+
+    [SerializeField]
+    private Sprite doubleGunSprite;
+
+    [SerializeField]
+    private Sprite spiralGunSprite;
+    
+    private RectTransform healthAndEnergyBarCanvas;
 
     private string lastSelectedWeaponName;
-    private Texture selectedWeaponTexture;
 
-    private void OnGUI()
+    private Color energyBarColor;
+
+    private void OnEnable()
     {
-        // Level name
-        string currentLevelName = GameManager.Instance.CurrentLevel != null ? GameManager.Instance.CurrentLevel.Name : string.Empty;
-        GUI.Label(new Rect(0f, 0f, Screen.width, 60f), currentLevelName, this.guiSkin.label);
+        GameManager.Instance.LevelChanged += this.OnGameLevelChange;
 
-        // Background.
-        GUI.DrawTexture(new Rect(0f, Screen.height - this.guiHeight, Screen.width, this.guiHeight), this.backgroundTexture);
+        this.healthAndEnergyBarCanvas = this.healthBar.transform.parent.GetComponent<RectTransform>();
+        this.energyBarColor = this.energyBar.color;
+    }
 
+    private void OnDisable()
+    {
+        GameManager.Instance.LevelChanged -= this.OnGameLevelChange;
+    }
+
+    private void Update()
+    {
         PlayerAvatar playerAvatar = GameManager.Instance.PlayerAvatar;
         if (playerAvatar != null)
         {
-            float barHeight = this.guiHeight / 2f;
-            int barWidth = Screen.width - this.guiHeight;
-
             // HP Bar.
             float healthRatio = playerAvatar.HealthPoint / playerAvatar.MaximumHealthPoint;
-            GUI.DrawTexture(new Rect(0f, Screen.height - this.guiHeight, barWidth * healthRatio, barHeight), this.healthBarTexture);
+            this.UpdateBarSize(this.healthBar, healthRatio);
 
             // Energy Bar.
             float energyRatio = playerAvatar.Energy / playerAvatar.MaximumEnergy;
-            GUI.DrawTexture(new Rect(0f, Screen.height - barHeight, barWidth * energyRatio, barHeight), playerAvatar.IsEnergyRestoring ? this.energyRestoringBarTexture : this.energyBarTexture);
+            this.energyBar.color = playerAvatar.IsEnergyRestoring ? this.energyBarRestoringColor : this.energyBarColor;
+            this.UpdateBarSize(this.energyBar, energyRatio);
 
             // Selected weapon icon.
             if (playerAvatar.SelectedWeaponName != this.lastSelectedWeaponName)
             {
-                this.selectedWeaponTexture = (Texture)Resources.Load(string.Format("Textures/{0}Icon", playerAvatar.SelectedWeaponName));
+                switch (playerAvatar.SelectedWeaponName)
+                {
+                    case "SimpleGun":
+                        this.weaponType.sprite = this.simpleGunSprite;
+                        break;
+
+                    case "DoubleGun":
+                        this.weaponType.sprite = this.doubleGunSprite;
+                        break;
+
+                    case "SpiralGun":
+                        this.weaponType.sprite = this.spiralGunSprite;
+                        break;
+
+                    default:
+                        Debug.LogError("Unknown gun type: " + playerAvatar.SelectedWeaponName);
+                        break;
+                }
+
                 this.lastSelectedWeaponName = playerAvatar.SelectedWeaponName;
             }
-
-            GUI.DrawTexture(new Rect(barWidth, Screen.height - this.guiHeight, this.guiHeight, this.guiHeight), this.selectedWeaponTexture);
         }
+    }
+
+    private void UpdateBarSize(Image bar, float healthRatio)
+    {
+        Vector2 sizeDelta = bar.rectTransform.sizeDelta;
+        sizeDelta.x = (healthRatio - 1) * this.healthAndEnergyBarCanvas.rect.width;
+        bar.rectTransform.sizeDelta = sizeDelta;
+
+        Vector3 position = bar.rectTransform.localPosition;
+        position.x = sizeDelta.x / 2f;
+        bar.rectTransform.localPosition = position;
+    }
+
+    private void OnGameLevelChange(object sender, LevelChangedEventArgs eventArgs)
+    {
+        this.levelName.text = eventArgs.Level.Name;
     }
 }

@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     private List<LevelDescription> levelDatabase;
 
+    public event System.EventHandler<LevelChangedEventArgs> LevelChanged;
+
     public static GameManager Instance
     {
         get;
@@ -99,6 +101,12 @@ public class GameManager : MonoBehaviour
         }
 
         this.CurrentLevel.Load(levelDescription);
+
+        if (this.LevelChanged != null)
+        {
+            this.LevelChanged.Invoke(this, new LevelChangedEventArgs(this.CurrentLevel));
+        }
+
         this.CurrentLevel.Start();
     }
     
