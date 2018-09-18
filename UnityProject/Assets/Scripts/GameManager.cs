@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private double lastEnemySpawnTime;
 
-    private GameObject currentLevelRoot;
+    private Level currentLevel;
     private int currentLevelIndex = -1;
 
     private List<LevelDescription> levelDatabase;
@@ -34,12 +34,6 @@ public class GameManager : MonoBehaviour
     public event System.EventHandler<LevelChangedEventArgs> LevelChanged;
 
     public static GameManager Instance
-    {
-        get;
-        private set;
-    }
-
-    public Level CurrentLevel
     {
         get;
         private set;
@@ -62,7 +56,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         // Spawn the player.
         GameObject player = (GameObject)GameObject.Instantiate(Instance.playerPrefab, new Vector3(0f, 0f), Quaternion.identity);
@@ -75,39 +69,8 @@ public class GameManager : MonoBehaviour
         this.levelDatabase = XmlHelpers.DeserializeDatabaseFromXML<LevelDescription>(this.levelsDatabase);
         if (this.levelDatabase != null && this.levelDatabase.Count > 0)
         {
-            this.NextLevel();
+            yield return this.NextLevel();
         }
-    }
-
-    private IEnumerator StartLevel(LevelDescription levelDescription)
-    {
-        Debug.Log("Start level " + levelDescription.Name);
-        
-        // Load level scene.
-        SceneManager.LoadSceneAsync(levelDescription.Scene, LoadSceneMode.Additive);
-
-        while (this.currentLevelRoot == null)
-        {
-            yield return null;
-            this.currentLevelRoot = GameObject.FindWithTag("LevelRoot");
-        }
-
-        // Retrieve level component and initialize it.
-        this.CurrentLevel = this.currentLevelRoot.GetComponent<Level>();
-        if (this.CurrentLevel == null)
-        {
-            Debug.Log("Can't retrieve Level component from the level root game object.");
-            yield break;
-        }
-
-        this.CurrentLevel.Load(levelDescription);
-
-        if (this.LevelChanged != null)
-        {
-            this.LevelChanged.Invoke(this, new LevelChangedEventArgs(this.CurrentLevel));
-        }
-
-        this.CurrentLevel.Start();
     }
     
     private void Update()
@@ -117,55 +80,63 @@ public class GameManager : MonoBehaviour
         this.ExecuteCurrentLevel();
     }
 
-    private void ExecuteCurrentLevel()
+    private IEnumerator NextLevel()
     {
-        if (this.CurrentLevel == null)
+        // Release current level.
+        Level level = this.currentLevel;
+        if (level != null)
         {
-            return;
+            this.currentLevel = null;
+            yield return level.Unload();
         }
 
-        if (this.CurrentLevel.IsFinished())
-        {
-            this.NextLevel();
-        }
-    }
-
-    private void NextLevel()
-    {
-        this.ReleaseCurrentLevel();
-
+        // Get next level description.
         this.currentLevelIndex++;
 
-        if (this.currentLevelIndex < 0)
-        {
-            return;
-        }
+        Debug.Assert(this.currentLevelIndex >= 0 );
 
         if (this.levelDatabase == null)
         {
             Debug.LogWarning("No levels in database");
-            return;
+            yield break;
         }
 
         if (this.currentLevelIndex >= this.levelDatabase.Count)
         {
             Debug.Log("No remaining level.");
+            yield break;
+        }
+
+        LevelDescription levelDescription = this.levelDatabase[this.currentLevelIndex];
+        
+        // Load next level.
+        Debug.Log("Start level " + levelDescription.Name);
+
+        this.currentLevel = new Level();
+
+        yield return this.currentLevel.Load(levelDescription);
+
+        if (this.LevelChanged != null)
+        {
+            this.LevelChanged.Invoke(this, new LevelChangedEventArgs(this.currentLevel));
+        }
+
+        this.currentLevel.Start();
+    }
+
+    private void ExecuteCurrentLevel()
+    {
+        if (this.currentLevel == null)
+        {
             return;
         }
 
-        this.StartCoroutine(this.StartLevel(this.levelDatabase[this.currentLevelIndex]));
-    }
+        this.currentLevel.Execute();
 
-    private void ReleaseCurrentLevel()
-    {
-        this.CurrentLevel = null;
-
-        if (this.currentLevelRoot != null)
+        if (this.currentLevel.IsFinished())
         {
-            GameObject.Destroy(this.currentLevelRoot);
+            this.StartCoroutine(this.NextLevel());
         }
-
-        this.currentLevelRoot = null;
     }
 
     private void RandomSpawn()

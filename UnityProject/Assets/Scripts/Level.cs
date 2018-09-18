@@ -1,14 +1,16 @@
 ﻿// <copyright file="Level.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
+using System.Collections;
 using UnityEngine;
 
 using Data;
+using UnityEngine.SceneManagement;
 
-public class Level : UnityEngine.MonoBehaviour
+public class Level
 {
     private LevelDescription description;
     private EnemyState[] isEnemySpawned;
-    private float currentLevelStartDate;
+    private float currentLevelStartDate = -1;
 
     public enum EnemyState
     {
@@ -23,10 +25,28 @@ public class Level : UnityEngine.MonoBehaviour
             return this.description.Name;
         }
     }
-    
-    public void Load(LevelDescription description)
+
+    public bool IsLevelStarted
     {
-        this.description = description;
+        get
+        {
+            return this.currentLevelStartDate >= 0f;
+        }
+    }
+
+    public IEnumerator Load(LevelDescription levelDescription)
+    {
+        this.description = levelDescription;
+
+        // Load level scene.
+        AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(this.description.Scene, LoadSceneMode.Additive);
+
+        while (!loadSceneAsync.isDone)
+        {
+            // Wait for the level to be loaded.
+            yield return null;
+        }
+
         this.isEnemySpawned = new EnemyState[this.description.Enemies != null ? this.description.Enemies.Length : 0];
         for (int index = 0; index < this.isEnemySpawned.Length; index++)
         {
@@ -34,8 +54,16 @@ public class Level : UnityEngine.MonoBehaviour
         }
     }
     
-    public void Release()
+    public IEnumerator Unload()
     {
+        AsyncOperation unloadSceneAsync = SceneManager.UnloadSceneAsync(this.description.Scene);
+
+        while (!unloadSceneAsync.isDone)
+        {
+            // Wait for the level to be loaded.
+            yield return null;
+        }
+
         this.description = null;
         this.isEnemySpawned = null;
     }
@@ -56,8 +84,13 @@ public class Level : UnityEngine.MonoBehaviour
         return false;
     }
 
-    public void Update()
+    public void Execute()
     {
+        if (!this.IsLevelStarted)
+        {
+            return;
+        }
+
         float timePassedSinceBeginning = Time.time - this.currentLevelStartDate;
         
         if (this.description == null)
