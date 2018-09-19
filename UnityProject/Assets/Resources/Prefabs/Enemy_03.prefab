@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 11400004}
   - component: {fileID: 11400008}
   m_Layer: 0
-  m_Name: Enemy_01
+  m_Name: Enemy_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000004371139}
   m_LocalPosition: {x: 4.35, y: 1.79, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 0}
@@ -128,10 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff183f9872bea3468ec6f98fe738ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumHealthPoint: 15
+  maximumHealthPoint: 45
   maximumEnergy: 10
   maximumSpeed: 1
-  energyRegenRate: 2
+  energyRegenRate: 4
   damageDealthAtCollision: 10
   energyRegenEfficiencyDuringRestoringProcess: 1
 --- !u!114 &11400002
@@ -178,8 +178,8 @@ MonoBehaviour:
   weaponName: 
   energyConsumedPerBullet: 10
   rateOfFire: 5
-  bulletSpeed: 6
-  bulletDamage: 2
+  bulletSpeed: 8
+  bulletDamage: 4
   bulletType: 1
   drawCanonsGizmo: 0
   canonDescriptions:

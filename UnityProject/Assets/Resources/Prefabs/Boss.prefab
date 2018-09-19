@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 11400004}
   - component: {fileID: 11400008}
   m_Layer: 0
-  m_Name: Enemy_01
+  m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,8 +47,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: -0.00000004371139}
-  m_LocalPosition: {x: 4.35, y: 1.79, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 4.4363265, y: -0.76825863, z: 0}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 0}
@@ -111,12 +111,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0.59567547, y: -0.012238555}
-      - {x: -0.107099526, y: 0.10902392}
-      - {x: -0.5809631, y: 0.6064457}
-      - {x: -0.33947945, y: -0.009365864}
-      - {x: -0.57260805, y: -0.60720086}
-      - {x: -0.10548879, y: -0.13547198}
+    - - {x: 0.613245, y: -0.003453785}
+      - {x: -0.0016812745, y: 0.60975957}
+      - {x: -0.61317444, y: 0.00029187795}
+      - {x: -0.0045214235, y: -0.6130576}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -128,10 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ff183f9872bea3468ec6f98fe738ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumHealthPoint: 15
-  maximumEnergy: 10
-  maximumSpeed: 1
-  energyRegenRate: 2
+  maximumHealthPoint: 200
+  maximumEnergy: 1000
+  maximumSpeed: 0.3
+  energyRegenRate: 100
   damageDealthAtCollision: 10
   energyRegenEfficiencyDuringRestoringProcess: 1
 --- !u!114 &11400002
@@ -176,15 +174,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: 
-  energyConsumedPerBullet: 10
+  energyConsumedPerBullet: 500
   rateOfFire: 5
-  bulletSpeed: 6
-  bulletDamage: 2
+  bulletSpeed: 4
+  bulletDamage: 20
   bulletType: 1
-  drawCanonsGizmo: 0
+  drawCanonsGizmo: 1
   canonDescriptions:
-  - BulletSpawnOffsetPosition: {x: 0.35, y: 0}
+  - BulletSpawnOffsetPosition: {x: 0.6, y: 0}
     BulletSpawnOffsetAngle: 0
+  - BulletSpawnOffsetPosition: {x: 0, y: -0.6}
+    BulletSpawnOffsetAngle: -45
+  - BulletSpawnOffsetPosition: {x: 0, y: 0.6}
+    BulletSpawnOffsetAngle: 45
+  - BulletSpawnOffsetPosition: {x: 0, y: -0.3}
+    BulletSpawnOffsetAngle: -45
+  - BulletSpawnOffsetPosition: {x: 0, y: 0.3}
+    BulletSpawnOffsetAngle: 45
+  - BulletSpawnOffsetPosition: {x: 0, y: -0.15}
+    BulletSpawnOffsetAngle: -45
+  - BulletSpawnOffsetPosition: {x: 0, y: 0.15}
+    BulletSpawnOffsetAngle: -45
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1389,9 +1399,9 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.14901961, g: 0.43137258, b: 0.3647059, a: 1}
-        key1: {r: 0.14901961, g: 0.43137258, b: 0.3647059, a: 1}
-        key2: {r: 0.14901961, g: 0.43137258, b: 0.3647059, a: 0}
+        key0: {r: 0.23529413, g: 0.19215688, b: 0.46274513, a: 1}
+        key1: {r: 0.23529413, g: 0.19215688, b: 0.46274513, a: 1}
+        key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1399,7 +1409,7 @@ ParticleSystem:
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
         ctime1: 65535
-        ctime2: 65535
+        ctime2: 0
         ctime3: 0
         ctime4: 0
         ctime5: 0
@@ -4727,7 +4737,7 @@ ParticleSystemRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 798f67b47a6b3be4d8354ff6e8b0ae63, type: 2}
+  - {fileID: 2100000, guid: aad1754a3dd2ecd41a58531eb2aa1a02, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4803,7 +4813,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d853cd4e2998b9f4493441547af6259a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1a96a85c133b4234e9ca2848f9e0956e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4823,31 +4833,23 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: canonDescriptions.Array.data[0].BulletSpawnOffsetPosition.x
-      value: .349999994
+      value: .600000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: canonDescriptions.Array.data[1].BulletSpawnOffsetPosition.y
+      value: .600000024
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: canonDescriptions.Array.data[2].BulletSpawnOffsetPosition.y
+      value: .600000024
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: rateOfFire
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: maximumEnergy
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: energyRegenRate
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: energyRegenEfficiencyDuringRestoringProcess
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: energyConsumedPerBullet
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maximumSpeed
-      value: 1
+      value: 1.20000005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}

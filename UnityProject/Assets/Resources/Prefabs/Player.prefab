@@ -207,10 +207,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: SimpleGun
-  energyConsumedPerBullet: 5
-  rateOfFire: 2
+  energyConsumedPerBullet: 1
+  rateOfFire: 10
   bulletSpeed: 8
-  bulletDamage: 20
+  bulletDamage: 5
   bulletType: 0
   drawCanonsGizmo: 1
   canonDescriptions:
