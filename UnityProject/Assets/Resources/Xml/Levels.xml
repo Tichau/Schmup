@@ -393,7 +393,7 @@
 
   </LevelDescription>
 
-    <LevelDescription Name="Second level" Duration="30">
+    <LevelDescription Name="Second level" Duration="40">
         <Scene>02_FinalLevel</Scene>
 
         <!-- Boss -->

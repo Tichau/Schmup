@@ -57,7 +57,7 @@ public class Level
     public IEnumerator Unload()
     {
         AsyncOperation unloadSceneAsync = SceneManager.UnloadSceneAsync(this.description.Scene);
-        while (unloadSceneAsync != null && !unloadSceneAsync.isDone)
+        while (!unloadSceneAsync.isDone)
         {
             // Wait for the level to be unloaded.
             yield return null;
