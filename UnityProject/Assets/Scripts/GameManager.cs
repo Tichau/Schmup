@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
         this.levelDatabase = XmlHelpers.DeserializeDatabaseFromXML<LevelDescription>(this.levelsDatabase);
         if (this.levelDatabase != null && this.levelDatabase.Count > 0)
         {
-            yield return this.NextLevel();
+            yield return this.StartCoroutine(this.NextLevel());
         }
     }
     
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         if (level != null)
         {
             this.currentLevel = null;
-            yield return level.Unload();
+            yield return this.StartCoroutine(level.Unload());
         }
 
         // Get next level description.
@@ -112,16 +112,17 @@ public class GameManager : MonoBehaviour
         // Load next level.
         Debug.Log("Start level " + levelDescription.Name);
 
-        this.currentLevel = new Level();
+        level = new Level();
 
-        yield return this.currentLevel.Load(levelDescription);
+        yield return this.StartCoroutine(level.Load(levelDescription));
 
         if (this.LevelChanged != null)
         {
-            this.LevelChanged.Invoke(this, new LevelChangedEventArgs(this.currentLevel));
+            this.LevelChanged.Invoke(this, new LevelChangedEventArgs(level));
         }
 
-        this.currentLevel.Start();
+        level.Start();
+        this.currentLevel = level;
     }
 
     private void ExecuteCurrentLevel()
