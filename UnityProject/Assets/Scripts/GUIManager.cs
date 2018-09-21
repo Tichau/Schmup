@@ -28,6 +28,9 @@ public class GUIManager : MonoBehaviour
 
     [SerializeField]
     private Sprite spiralGunSprite;
+
+    [SerializeField]
+    private Text gameoverText;
     
     private RectTransform healthAndEnergyBarCanvas;
 
@@ -50,6 +53,15 @@ public class GUIManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.State == GameState.Dead)
+        {
+            this.gameoverText.color = Color.white;
+        }
+        else
+        {
+            this.gameoverText.color = Color.clear;
+        }
+
         PlayerAvatar playerAvatar = GameManager.Instance.PlayerAvatar;
         if (playerAvatar != null)
         {

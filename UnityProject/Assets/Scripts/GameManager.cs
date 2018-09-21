@@ -1,11 +1,12 @@
 ﻿// <copyright file="GameManager.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 using Data;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +46,12 @@ public class GameManager : MonoBehaviour
         private set;
     }
 
+    public GameState State
+    {
+        get;
+        private set;
+    }
+
     private void Awake()
     {
         if (Instance != null)
@@ -58,8 +65,31 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        yield return this.StartCoroutine(this.StartNewGame());
+    }
+
+    private IEnumerator StartNewGame()
+    {
+        // Reset game if needed.
+        if (this.PlayerAvatar != null)
+        {
+            GameObject.Destroy(this.PlayerAvatar.gameObject);
+            this.PlayerAvatar = null;
+        }
+
+        if (this.currentLevel != null)
+        {
+            this.StartCoroutine(this.currentLevel.Unload());
+            this.currentLevel = null;
+        }
+
+        this.currentLevelIndex = -1;
+
+        // TODO: Kill all enemies.
+        
         // Spawn the player.
-        GameObject player = (GameObject)GameObject.Instantiate(Instance.playerPrefab, new Vector3(0f, 0f), Quaternion.identity);
+        GameObject player =
+            (GameObject) GameObject.Instantiate(Instance.playerPrefab, new Vector3(0f, 0f), Quaternion.identity);
         this.PlayerAvatar = player.GetComponent<PlayerAvatar>();
         if (this.PlayerAvatar == null)
         {
@@ -71,13 +101,39 @@ public class GameManager : MonoBehaviour
         {
             yield return this.StartCoroutine(this.NextLevel());
         }
+
+        this.State = GameState.Playing;
     }
     
     private void Update()
     {
-        //// this.RandomSpawn();
+        switch (this.State)
+        {
+            case GameState.Initializing:
+                break;
 
-        this.ExecuteCurrentLevel();
+            case GameState.Playing:
+                //// this.RandomSpawn();
+
+                this.ExecuteCurrentLevel();
+
+                if (this.PlayerAvatar.IsDead)
+                {
+                    this.State = GameState.Dead;
+                }
+
+                break;
+
+            case GameState.Dead:
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    // Start a new game.
+                    this.State = GameState.Initializing;
+
+                    this.StartCoroutine(this.StartNewGame());
+                }
+                break;
+        }
     }
 
     private IEnumerator NextLevel()

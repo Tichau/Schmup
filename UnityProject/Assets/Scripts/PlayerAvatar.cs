@@ -21,6 +21,11 @@ public class PlayerAvatar : BaseAvatar
         }
     }
 
+    public bool IsDead
+    {
+        get { return this.HealthPoint <= 0; }
+    }
+
     public void SwitchToNextWeapon()
     {
         if (Time.time < this.lastWeaponSelectionChangeTime + this.weaponSwitchCooldown)
