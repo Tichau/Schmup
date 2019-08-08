@@ -19,7 +19,7 @@ namespace Data
         public EnemyDescription[] Enemies
         {
             get;
-            private set;
+            set;
         }
 
         [XmlElement]

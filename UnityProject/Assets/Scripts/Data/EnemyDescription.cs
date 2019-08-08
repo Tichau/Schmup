@@ -13,21 +13,21 @@ namespace Data
         public float SpawnDate
         {
             get;
-            private set;
+            set;
         }
 
         [XmlElement]
         public Vector2 SpawnPosition
         {
             get;
-            private set;
+            set;
         }
 
         [XmlElement]
         public string PrefabPath
         {
             get;
-            private set;
+            set;
         }
     }
 }
