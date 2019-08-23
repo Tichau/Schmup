@@ -10,6 +10,9 @@ public class PlayerAvatar : BaseAvatar
     [SerializeField]
     private float weaponSwitchCooldown;
 
+    [SerializeField]
+    private bool invincible;
+
     private float lastWeaponSelectionChangeTime;
     private int selectedWeapon;
 
@@ -24,6 +27,16 @@ public class PlayerAvatar : BaseAvatar
     public bool IsDead
     {
         get { return this.HealthPoint <= 0; }
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        if (this.invincible)
+        {
+            return;
+        }
+
+        base.TakeDamage(damage);
     }
 
     public void SwitchToNextWeapon()

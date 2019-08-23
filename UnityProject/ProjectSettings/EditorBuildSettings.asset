@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: f4c432e18d986564fb9ac6d654abadac
   - enabled: 1
-    path: Assets/Scenes/Levels/01_FirstLevel.unity
+    path: Assets/Scenes/Levels/02_Saturn.unity
     guid: 5fa3ee4c10635ef4693829609d63f36a
   - enabled: 1
-    path: Assets/Scenes/Levels/02_FinalLevel.unity
+    path: Assets/Scenes/Levels/01_Moon.unity
     guid: 107983754f0ed6543bb3bc293ea4d55b
   - enabled: 1
-    path: Assets/Scenes/Levels/03_GameOver.unity
+    path: Assets/Scenes/Levels/03_EndOfUniverse.unity
     guid: af87cca942e0a134aa2166b8d5f1bdf8
   m_configObjects: {}

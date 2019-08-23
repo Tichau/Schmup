@@ -219,7 +219,7 @@ public class GameManager : MonoBehaviour
         }
 
         float randomY = Random.Range(-4f, 4f);
-        EnemyFactory.GetEnemy(new Vector3(10f, randomY), Quaternion.Euler(0f, 0f, 180f), prefabPath);
+        EnemyFactory.GetEnemy(new Vector3(10f, randomY), Quaternion.Euler(0f, 0f, 0f), prefabPath);
         this.lastEnemySpawnTime = Time.time;
 
         // Up the difficulty.

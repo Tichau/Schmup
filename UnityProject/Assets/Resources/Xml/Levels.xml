@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Datatable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-    <LevelDescription Name="First level" Duration="50">
-        <Scene>01_FirstLevel</Scene>
+    <LevelDescription Name="The moon" Duration="50">
+        <Scene>01_Moon</Scene>
 
         <!-- First wave -->
         <EnemyDescription>
@@ -281,7 +281,7 @@
             <PrefabPath>Prefabs/Enemy_01</PrefabPath>
         </EnemyDescription>
 
-        <!-- Fourht Wave --> 
+        <!-- Fourth Wave --> 
          <EnemyDescription>
             <SpawnDate>30</SpawnDate>
             <SpawnPosition>
@@ -319,29 +319,11 @@
             <PrefabPath>Prefabs/Enemy_04</PrefabPath>
         </EnemyDescription>
 
-         <EnemyDescription>
-            <SpawnDate>40</SpawnDate>
-            <SpawnPosition>
-                <x>12</x>
-                <y>-3</y>
-            </SpawnPosition>
-            <PrefabPath>Prefabs/Enemy_04</PrefabPath>
-        </EnemyDescription>
-
         <EnemyDescription>
             <SpawnDate>40</SpawnDate>
             <SpawnPosition>
                 <x>12</x>
                 <y>-2</y>
-            </SpawnPosition>
-            <PrefabPath>Prefabs/Enemy_04</PrefabPath>
-        </EnemyDescription>
-
-        <EnemyDescription>
-            <SpawnDate>40</SpawnDate>
-            <SpawnPosition>
-                <x>12</x>
-                <y>-1</y>
             </SpawnPosition>
             <PrefabPath>Prefabs/Enemy_04</PrefabPath>
         </EnemyDescription>
@@ -364,15 +346,6 @@
             <PrefabPath>Prefabs/Enemy_04</PrefabPath>
         </EnemyDescription>
 
-         <EnemyDescription>
-            <SpawnDate>40</SpawnDate>
-            <SpawnPosition>
-                <x>12</x>
-                <y>3</y>
-            </SpawnPosition>
-            <PrefabPath>Prefabs/Enemy_04</PrefabPath>
-        </EnemyDescription>
-
         <EnemyDescription>
             <SpawnDate>40</SpawnDate>
             <SpawnPosition>
@@ -382,19 +355,10 @@
             <PrefabPath>Prefabs/Enemy_04</PrefabPath>
         </EnemyDescription>
 
-        <EnemyDescription>
-            <SpawnDate>40</SpawnDate>
-            <SpawnPosition>
-                <x>12</x>
-                <y>1</y>
-            </SpawnPosition>
-            <PrefabPath>Prefabs/Enemy_04</PrefabPath>
-        </EnemyDescription>
-
   </LevelDescription>
 
-    <LevelDescription Name="Second level" Duration="40">
-        <Scene>02_FinalLevel</Scene>
+    <LevelDescription Name="Saturn" Duration="40">
+        <Scene>02_Saturn</Scene>
 
         <!-- Boss -->
         <EnemyDescription>
@@ -476,7 +440,7 @@
       	  <SpawnDate>20</SpawnDate>
             <SpawnPosition>
                 <x>12</x>
-                <y>3</y>
+                <y>-3</y>
             </SpawnPosition>
             <PrefabPath>Prefabs/Enemy_02</PrefabPath>
         </EnemyDescription>
@@ -502,8 +466,8 @@
 
     </LevelDescription>
 
-    <LevelDescription Name="Game Over" Duration="10000">
-        <Scene>03_GameOver</Scene>
+    <LevelDescription Name="The end of the universe" Duration="10000">
+        <Scene>03_EndOfUniverse</Scene>
     </LevelDescription>
     
 </Datatable>

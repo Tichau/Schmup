@@ -142,7 +142,7 @@ public class BaseAvatar : MonoBehaviour
         private set;
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if (this.OnDamageTaken != null && damage > 0)
         {

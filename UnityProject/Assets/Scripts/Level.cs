@@ -116,7 +116,7 @@ public class Level
             }
 
             // Spawn !
-            EnemyFactory.GetEnemy(enemyDescription.SpawnPosition, Quaternion.Euler(0f, 0f, 180f), enemyDescription.PrefabPath);
+            EnemyFactory.GetEnemy(enemyDescription.SpawnPosition, Quaternion.Euler(0f, 0f, 0f), enemyDescription.PrefabPath);
             this.isEnemySpawned[index] = EnemyState.Spawned;
         }
     }

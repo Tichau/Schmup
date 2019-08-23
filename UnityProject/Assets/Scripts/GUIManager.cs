@@ -55,7 +55,7 @@ public class GUIManager : MonoBehaviour
     {
         if (GameManager.Instance.State == GameState.Dead)
         {
-            this.gameoverText.color = Color.white;
+            this.gameoverText.color = new Color(1f, 1f, 1f, 0.5f);
         }
         else
         {
