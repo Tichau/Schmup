@@ -59,6 +59,7 @@ public class EnemyFactory : MonoBehaviour
             Debug.Log("Number of enemies instantiated = " + EnemyFactory.Instance.enemyCount);
         }
 
+        enemy.Reset();
         enemy.Position = position;
         enemy.gameObject.SetActive(true);
 

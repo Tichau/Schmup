@@ -1,16 +1,25 @@
 ﻿// <copyright file="EnemyAvatar.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 public class EnemyAvatar : BaseAvatar
 {
+    [SerializeField]
+    private int scoreGainOnDeath;
+
     public string PrefabPath
     {
         get;
         set;
     }
-    
+
+    protected override void Die()
+    {
+        base.Die();
+
+        GameManager.Instance.AddScoreGain(this.scoreGainOnDeath);
+    }
+
     protected override void Release()
     {
         EnemyFactory.ReleaseEnemy(this);

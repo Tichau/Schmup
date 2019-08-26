@@ -9,6 +9,9 @@ public class GUIManager : MonoBehaviour
     private Text levelName;
 
     [SerializeField]
+    private Text score;
+
+    [SerializeField]
     private Image healthBar;
 
     [SerializeField]
@@ -31,7 +34,10 @@ public class GUIManager : MonoBehaviour
 
     [SerializeField]
     private Text gameoverText;
-    
+
+    [SerializeField]
+    private Text gameoverScore;
+
     private RectTransform healthAndEnergyBarCanvas;
 
     private string lastSelectedWeaponName;
@@ -56,11 +62,16 @@ public class GUIManager : MonoBehaviour
         if (GameManager.Instance.State == GameState.Dead)
         {
             this.gameoverText.color = new Color(1f, 1f, 1f, 0.5f);
+            this.gameoverScore.color = new Color(1f, 1f, 1f, 0.75f);
+            this.gameoverScore.text = $"Your score: {GameManager.Instance.Score:000 000 000}\nBest score: {GameManager.Instance.BestScore:000 000 000}";
         }
         else
         {
             this.gameoverText.color = Color.clear;
+            this.gameoverScore.color = Color.clear;
         }
+
+        this.score.text = GameManager.Instance.Score.ToString("000 000 000");
 
         PlayerAvatar playerAvatar = GameManager.Instance.PlayerAvatar;
         if (playerAvatar != null)

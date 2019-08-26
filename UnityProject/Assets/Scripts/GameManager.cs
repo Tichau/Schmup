@@ -52,6 +52,28 @@ public class GameManager : MonoBehaviour
         private set;
     }
 
+    public int Score
+    {
+        get;
+        private set;
+    }
+
+    public int BestScore
+    {
+        get;
+        private set;
+    }
+
+    public void AddScoreGain(int gain)
+    {
+        this.Score += gain;
+        if (this.Score > this.BestScore)
+        {
+            this.BestScore = this.Score;
+            PlayerPrefs.SetInt("BestScore", this.BestScore);
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null)
@@ -65,6 +87,8 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        this.BestScore = PlayerPrefs.GetInt("BestScore", 0);
+
         yield return this.StartCoroutine(this.StartNewGame());
     }
 
@@ -84,6 +108,7 @@ public class GameManager : MonoBehaviour
         }
 
         this.currentLevelIndex = -1;
+        this.Score = 0;
 
         // TODO: Kill all enemies.
         

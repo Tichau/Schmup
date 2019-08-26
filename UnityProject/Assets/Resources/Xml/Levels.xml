@@ -367,7 +367,7 @@
                 <x>10</x>
                 <y>0</y>
             </SpawnPosition>
-            <PrefabPath>Prefabs/Boss</PrefabPath>
+            <PrefabPath>Prefabs/Enemy_Boss</PrefabPath>
         </EnemyDescription>
 
         <!-- first side kicks -->

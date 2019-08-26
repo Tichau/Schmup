@@ -142,8 +142,19 @@ public class BaseAvatar : MonoBehaviour
         private set;
     }
 
+    public virtual void Reset()
+    {
+        this.HealthPoint = this.MaximumHealthPoint;
+        this.Energy = this.MaximumEnergy;
+    }
+
     public virtual void TakeDamage(float damage)
     {
+        if (this.HealthPoint <= 0)
+        {
+            return; // Already dead.
+        }
+        
         if (this.OnDamageTaken != null && damage > 0)
         {
             this.OnDamageTaken.Invoke(this, new DamageTakenEventArgs(damage));
@@ -179,8 +190,7 @@ public class BaseAvatar : MonoBehaviour
 
     protected virtual void Start()
     {
-        this.HealthPoint = this.MaximumHealthPoint;
-        this.Energy = this.MaximumEnergy;
+        this.Reset();
 
         // Retrieve the bullet guns of the game object.
         this.bulletGuns = this.GetComponents<BulletGun>();

@@ -155,6 +155,7 @@ MonoBehaviour:
   energyRegenRate: 4
   damageDealthAtCollision: 10
   energyRegenEfficiencyDuringRestoringProcess: 1
+  scoreGainOnDeath: 500
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 0
