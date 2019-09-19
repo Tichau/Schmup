@@ -41,7 +41,7 @@ public abstract class Bullet : MonoBehaviour
         // Very simple test if out of bound bullet.
         if (this.Position.x > 20 || this.Position.x < -20 || this.Position.y > 20 || this.Position.y < -20)
         {
-            BulletsFactory.ReleaseBullet(this);
+            GameObject.Destroy(this.gameObject);
         }
     }
 
@@ -67,7 +67,7 @@ public abstract class Bullet : MonoBehaviour
         if (avatar != null)
         {
             avatar.TakeDamage(this.Damage);
-            BulletsFactory.ReleaseBullet(this);
+            GameObject.Destroy(this.gameObject);
         }
     }
 }

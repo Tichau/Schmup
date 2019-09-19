@@ -212,7 +212,7 @@ MonoBehaviour:
   rateOfFire: 10
   bulletSpeed: 8
   bulletDamage: 5
-  bulletType: 0
+  bulletPrefab: {fileID: 100000, guid: cf8823df26d1b6a439451a77ce1eb72f, type: 3}
   drawCanonsGizmo: 0
   canonDescriptions:
   - BulletSpawnOffsetPosition: {x: 0.6, y: 0}
@@ -234,7 +234,7 @@ MonoBehaviour:
   rateOfFire: 6
   bulletSpeed: 8
   bulletDamage: 10
-  bulletType: 0
+  bulletPrefab: {fileID: 100000, guid: cf8823df26d1b6a439451a77ce1eb72f, type: 3}
   drawCanonsGizmo: 0
   canonDescriptions:
   - BulletSpawnOffsetPosition: {x: 0, y: 0.5}
@@ -258,7 +258,7 @@ MonoBehaviour:
   rateOfFire: 10
   bulletSpeed: 2
   bulletDamage: 5
-  bulletType: 2
+  bulletPrefab: {fileID: 100000, guid: b7f0cfd9488d71f49b72666275a9c55a, type: 3}
   drawCanonsGizmo: 0
   canonDescriptions:
   - BulletSpawnOffsetPosition: {x: 0.6, y: 0}

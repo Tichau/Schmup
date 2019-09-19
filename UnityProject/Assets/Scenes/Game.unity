@@ -384,51 +384,6 @@ LightingSettings:
   m_PVRTiledBaking: 0
   m_NumRaysToShootPerTexel: -1
   m_RespectSceneVisibilityWhenBakingGI: 0
---- !u!1 &1688814998
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1688814999}
-  - component: {fileID: 1688815000}
-  m_Layer: 0
-  m_Name: Debug
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1688814999
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688814998}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1688815000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688814998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 171e138f0cdb9694b822624fa171750c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  guiSkin: {fileID: 11400000, guid: 97f324e952ed0da4f80f27829c7fea79, type: 2}
 --- !u!1 &1748442148
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,8 +494,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1973521486}
-  - component: {fileID: 1973521485}
-  - component: {fileID: 1973521487}
   m_Layer: 0
   m_Name: Factories
   m_TagString: Untagged
@@ -548,25 +501,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1973521485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973521484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8c151a338b5de5498bc053b6a6febb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerBulletPrefab: {fileID: 100000, guid: cf8823df26d1b6a439451a77ce1eb72f, type: 3}
-  numberOfPlayerBulletToPreinstantiate: 50
-  enemyBulletPrefab: {fileID: 100000, guid: 93f0bb3ff54925646a8409e6474fb184, type: 3}
-  numberOfEnemyBulletToPreinstantiate: 400
-  playerSpiralBulletPrefab: {fileID: 100000, guid: b7f0cfd9488d71f49b72666275a9c55a,
-    type: 3}
-  numberOfPlayerSpiralBulletToPreinstantiate: 200
 --- !u!4 &1973521486
 Transform:
   m_ObjectHideFlags: 0
@@ -582,18 +516,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1973521487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973521484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdc5dee385ea8974f88b54cd2ba90cbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -602,4 +524,3 @@ SceneRoots:
   - {fileID: 1973521486}
   - {fileID: 768236058}
   - {fileID: 781079256}
-  - {fileID: 1688814999}
