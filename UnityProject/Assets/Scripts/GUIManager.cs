@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class GUIManager : MonoBehaviour
 {
     [SerializeField]
-    private Text levelName;
-
-    [SerializeField]
     private Text score;
 
     [SerializeField]
@@ -46,15 +43,12 @@ public class GUIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.LevelChanged += this.OnGameLevelChange;
-
         this.healthAndEnergyBarCanvas = this.healthBar.transform.parent.GetComponent<RectTransform>();
         this.energyBarColor = this.energyBar.color;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.LevelChanged -= this.OnGameLevelChange;
     }
 
     private void Update()
@@ -121,10 +115,5 @@ public class GUIManager : MonoBehaviour
         Vector3 position = bar.rectTransform.localPosition;
         position.x = sizeDelta.x / 2f;
         bar.rectTransform.localPosition = position;
-    }
-
-    private void OnGameLevelChange(object sender, LevelChangedEventArgs eventArgs)
-    {
-        this.levelName.text = eventArgs.Level.Name;
     }
 }
