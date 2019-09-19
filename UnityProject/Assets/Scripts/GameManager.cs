@@ -22,17 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float rateOfEnemySpawnIncreaseStep = 0.02f;
 
-    [SerializeField]
-    private TextAsset levelsDatabase;
-
     private double lastEnemySpawnTime;
-
-    private Level currentLevel;
-    private int currentLevelIndex = -1;
-
-    private List<LevelDescription> levelDatabase;
-
-    public event System.EventHandler<LevelChangedEventArgs> LevelChanged;
 
     public static GameManager Instance
     {
@@ -101,13 +91,6 @@ public class GameManager : MonoBehaviour
             this.PlayerAvatar = null;
         }
 
-        if (this.currentLevel != null)
-        {
-            this.StartCoroutine(this.currentLevel.Unload());
-            this.currentLevel = null;
-        }
-
-        this.currentLevelIndex = -1;
         this.Score = 0;
 
         // Kill all enemies before starting new level.
@@ -125,13 +108,9 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Can't retrieve the PlayerAvatar script.");
         }
 
-        this.levelDatabase = XmlHelpers.DeserializeDatabaseFromXML<LevelDescription>(this.levelsDatabase);
-        if (this.levelDatabase != null && this.levelDatabase.Count > 0)
-        {
-            yield return this.StartCoroutine(this.NextLevel());
-        }
-
         this.State = GameState.Playing;
+
+        yield break;
     }
     
     private void Update()
@@ -142,9 +121,9 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Playing:
-                //// this.RandomSpawn();
+                this.RandomSpawn();
 
-                this.ExecuteCurrentLevel();
+                ////this.ExecuteCurrentLevel();
 
                 if (this.PlayerAvatar.IsDead)
                 {
@@ -162,66 +141,6 @@ public class GameManager : MonoBehaviour
                     this.StartCoroutine(this.StartNewGame());
                 }
                 break;
-        }
-    }
-
-    private IEnumerator NextLevel()
-    {
-        // Release current level.
-        Level level = this.currentLevel;
-        if (level != null)
-        {
-            this.currentLevel = null;
-            yield return this.StartCoroutine(level.Unload());
-        }
-
-        // Get next level description.
-        this.currentLevelIndex++;
-
-        Debug.Assert(this.currentLevelIndex >= 0 );
-
-        if (this.levelDatabase == null)
-        {
-            Debug.LogWarning("No levels in database");
-            yield break;
-        }
-
-        if (this.currentLevelIndex >= this.levelDatabase.Count)
-        {
-            Debug.Log("No remaining level.");
-            yield break;
-        }
-
-        LevelDescription levelDescription = this.levelDatabase[this.currentLevelIndex];
-        
-        // Load next level.
-        Debug.Log("Start level " + levelDescription.Name);
-
-        level = new Level();
-
-        yield return this.StartCoroutine(level.Load(levelDescription));
-
-        if (this.LevelChanged != null)
-        {
-            this.LevelChanged.Invoke(this, new LevelChangedEventArgs(level));
-        }
-
-        level.Start();
-        this.currentLevel = level;
-    }
-
-    private void ExecuteCurrentLevel()
-    {
-        if (this.currentLevel == null)
-        {
-            return;
-        }
-
-        this.currentLevel.Execute();
-
-        if (this.currentLevel.IsFinished())
-        {
-            this.StartCoroutine(this.NextLevel());
         }
     }
 
