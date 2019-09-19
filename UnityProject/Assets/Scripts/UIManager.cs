@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
 
         this.levelName = this.gameHUD.rootVisualElement.Q<Label>("level-name");
 		Debug.Assert(this.levelName != null);
+		this.levelName.style.display = new StyleEnum<DisplayStyle>(DisplayStyle.None);
         this.score = this.gameHUD.rootVisualElement.Q<Label>("score");
 		Debug.Assert(this.score != null);
         this.energyBar = this.gameHUD.rootVisualElement.Q<ProgressBar>("energy-bar");
@@ -39,13 +40,10 @@ public class UIManager : MonoBehaviour
 
         this.gameOverScores = this.gameOverPanel.rootVisualElement.Q<Label>("game-over-scores");
 		Debug.Assert(this.gameOverScores != null);
-
-        GameManager.Instance.LevelChanged += this.OnGameLevelChange;
 	}
 
 	private void OnDisable()
     {
-        GameManager.Instance.LevelChanged -= this.OnGameLevelChange;
     }
 
 	private void Update()
@@ -92,9 +90,4 @@ public class UIManager : MonoBehaviour
             }
 		}
 	}
-
-	private void OnGameLevelChange(object sender, LevelChangedEventArgs eventArgs)
-    {
-        this.levelName.text = eventArgs.Level.Name;
-    }
 }

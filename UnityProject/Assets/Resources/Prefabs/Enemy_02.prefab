@@ -181,7 +181,7 @@ MonoBehaviour:
   rateOfFire: 10
   bulletSpeed: 8
   bulletDamage: 2
-  bulletType: 1
+  bulletPrefab: {fileID: 100000, guid: 93f0bb3ff54925646a8409e6474fb184, type: 3}
   drawCanonsGizmo: 0
   canonDescriptions:
   - BulletSpawnOffsetPosition: {x: -0.12, y: 0}

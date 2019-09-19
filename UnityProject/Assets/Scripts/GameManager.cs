@@ -27,13 +27,6 @@ public class GameManager : MonoBehaviour
 
     private double lastEnemySpawnTime;
 
-    private Level currentLevel;
-    private int currentLevelIndex = -1;
-
-    private LevelDescription[] levelDatabase;
-
-    public event System.EventHandler<LevelChangedEventArgs> LevelChanged;
-
     public static GameManager Instance
     {
         get;
@@ -101,20 +94,13 @@ public class GameManager : MonoBehaviour
             this.PlayerAvatar = null;
         }
 
-        if (this.currentLevel != null)
-        {
-            this.StartCoroutine(this.currentLevel.Unload());
-            this.currentLevel = null;
-        }
-
-        this.currentLevelIndex = -1;
         this.Score = 0;
 
         // Kill all enemies before starting new level.
         EnemyAvatar[] enemies = GameObject.FindObjectsOfType<EnemyAvatar>();
         foreach (EnemyAvatar enemy in enemies)
         {
-            EnemyFactory.ReleaseEnemy(enemy);
+            GameObject.Destroy(enemy.gameObject);
         }
 
         // Spawn the player.
@@ -125,21 +111,9 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Can't retrieve the PlayerAvatar script.");
         }
 
-        Debug.Assert(this.levelAssets.Length > 0, "There should have at least one level asset registered.");
-
-        this.levelDatabase = new LevelDescription[this.levelAssets.Length];
-        for (int index = 0; index < this.levelAssets.Length; index++)
-        {
-            this.levelDatabase[index] = XmlHelpers.DeserializeFromXML<LevelDescription>(this.levelAssets[index]);
-            if (this.levelDatabase[index] == null)
-            {
-                Debug.LogError($"Level {index} failed to be loaded.");
-            }
-        }
-
-        yield return this.StartCoroutine(this.NextLevel());
-
         this.State = GameState.Playing;
+
+        yield break;
     }
     
     private void Update()
@@ -150,9 +124,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case GameState.Playing:
-                //// this.RandomSpawn();
-
-                this.ExecuteCurrentLevel();
+                this.RandomSpawn();
 
                 if (this.PlayerAvatar.IsDead)
                 {
@@ -170,66 +142,6 @@ public class GameManager : MonoBehaviour
                     this.StartCoroutine(this.StartNewGame());
                 }
                 break;
-        }
-    }
-
-    private IEnumerator NextLevel()
-    {
-        // Release current level.
-        Level level = this.currentLevel;
-        if (level != null)
-        {
-            this.currentLevel = null;
-            yield return this.StartCoroutine(level.Unload());
-        }
-
-        // Get next level description.
-        this.currentLevelIndex++;
-
-        Debug.Assert(this.currentLevelIndex >= 0 );
-
-        if (this.levelDatabase == null)
-        {
-            Debug.LogWarning("No levels in database");
-            yield break;
-        }
-
-        if (this.currentLevelIndex >= this.levelDatabase.Length)
-        {
-            Debug.Log("No remaining level.");
-            yield break;
-        }
-
-        LevelDescription levelDescription = this.levelDatabase[this.currentLevelIndex];
-        
-        // Load next level.
-        Debug.Log("Start level " + levelDescription.Name);
-
-        level = new Level();
-
-        yield return this.StartCoroutine(level.Load(levelDescription));
-
-        if (this.LevelChanged != null)
-        {
-            this.LevelChanged.Invoke(this, new LevelChangedEventArgs(level));
-        }
-
-        level.Start();
-        this.currentLevel = level;
-    }
-
-    private void ExecuteCurrentLevel()
-    {
-        if (this.currentLevel == null)
-        {
-            return;
-        }
-
-        this.currentLevel.Execute();
-
-        if (this.currentLevel.IsFinished())
-        {
-            this.StartCoroutine(this.NextLevel());
         }
     }
 
@@ -256,7 +168,18 @@ public class GameManager : MonoBehaviour
         }
 
         float randomY = Random.Range(-4f, 4f);
-        EnemyFactory.GetEnemy(new Vector3(10f, randomY), Quaternion.Euler(0f, 0f, 0f), prefabPath);
+
+        // Instantiate a new enemy.
+        Vector2 position = new Vector3(10f, randomY);
+        GameObject gameObject = null;
+
+        GameObject prefab = (GameObject)Resources.Load(prefabPath);
+        gameObject = (GameObject)GameObject.Instantiate(prefab, position, Quaternion.Euler(0f, 0f, 0f));
+
+        EnemyAvatar enemy = gameObject.GetComponent<EnemyAvatar>();
+        enemy.PrefabPath = prefabPath;
+        enemy.Position = position;
+
         this.lastEnemySpawnTime = Time.time;
 
         // Up the difficulty.

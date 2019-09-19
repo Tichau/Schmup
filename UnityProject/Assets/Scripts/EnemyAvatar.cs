@@ -22,7 +22,7 @@ public class EnemyAvatar : BaseAvatar
 
     protected override void Release()
     {
-        EnemyFactory.ReleaseEnemy(this);
+        GameObject.Destroy(this.gameObject);
     }
 
     protected override void Update()
@@ -32,7 +32,7 @@ public class EnemyAvatar : BaseAvatar
         // Very simple out of bound test.
         if (this.Position.x > 14 || this.Position.x < -14 || this.Position.y > 20 || this.Position.y < -20)
         {
-            EnemyFactory.ReleaseEnemy(this);
+            GameObject.Destroy(this.gameObject);
         }
     }
 

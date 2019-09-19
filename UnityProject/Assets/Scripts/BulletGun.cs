@@ -24,7 +24,7 @@ public class BulletGun : MonoBehaviour
     private float bulletDamage;
 
     [SerializeField]
-    private BulletType bulletType;
+    private GameObject bulletPrefab;
 
     [SerializeField]
     private bool drawCanonsGizmo;
@@ -63,13 +63,7 @@ public class BulletGun : MonoBehaviour
         get => this.weaponName;
         private set => this.weaponName = value;
     }
-
-    public BulletType BulletType
-    {
-        get => this.bulletType;
-        private set => this.bulletType = value;
-    }
-
+    
     public virtual bool IsFiring
     {
         get
@@ -160,7 +154,10 @@ public class BulletGun : MonoBehaviour
             Vector2 direction = new Vector2(Mathf.Cos(bulletSpawnAngle), Mathf.Sin(bulletSpawnAngle));
 
             // Fire a bullet !
-            Bullet bullet = BulletsFactory.GetBullet(this.GetBulletSpawnPosition(index), this.BulletType);
+            GameObject gameObject = (GameObject)GameObject.Instantiate(this.bulletPrefab);
+            Bullet bullet = gameObject.GetComponent<Bullet>();
+            bullet.Position = this.GetBulletSpawnPosition(index);
+
             bullet.Initialize(direction, this.BulletSpeed, this.BulletDamage);
         }
     }
