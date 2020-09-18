@@ -12,6 +12,5 @@ public class LevelChangedEventArgs : EventArgs
     public Level Level
     {
         get;
-        private set;
     }
 }

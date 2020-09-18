@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class BaseAvatar : MonoBehaviour
 {
-    protected BulletGun[] bulletGuns;
+    protected BulletGun[] BulletGuns;
 
     private const float EnergyEpsilon = 1f;
 
@@ -42,23 +42,13 @@ public class BaseAvatar : MonoBehaviour
 
     public float MaximumHealthPoint
     {
-        get
-        {
-            return this.maximumHealthPoint;
-        }
-
-        private set
-        {
-            this.maximumHealthPoint = value;
-        }
+        get => this.maximumHealthPoint;
+        private set => this.maximumHealthPoint = value;
     }
 
     public float Energy
     {
-        get
-        {
-            return this.energy;
-        }
+        get => this.energy;
 
         set
         {
@@ -72,68 +62,33 @@ public class BaseAvatar : MonoBehaviour
 
     public float EnergyRegenRate
     {
-        get
-        {
-            return this.energyRegenRate;
-        }
-
-        private set
-        {
-            this.energyRegenRate = value;
-        }
+        get => this.energyRegenRate;
+        private set => this.energyRegenRate = value;
     }
 
     public float MaximumEnergy
     {
-        get
-        {
-            return this.maximumEnergy;
-        }
-
-        private set
-        {
-            this.maximumEnergy = value;
-        }
+        get => this.maximumEnergy;
+        private set => this.maximumEnergy = value;
     }
 
     public float MaximumSpeed
     {
-        get
-        {
-            return this.maximumSpeed;
-        }
-
-        private set
-        {
-            this.maximumSpeed = value;
-        }
+        get => this.maximumSpeed;
+        private set => this.maximumSpeed = value;
     }
 
     public float DamageDealthAtCollision
     {
-        get
-        {
-            return this.damageDealthAtCollision;
-        }
-
-        private set
-        {
-            this.damageDealthAtCollision = value;
-        }
+        get => this.damageDealthAtCollision;
+        private set => this.damageDealthAtCollision = value;
     }
 
     //// Properties.
     public Vector2 Position
     {
-        get
-        {
-            return this.transform.position;
-        }
-
-        set
-        {
-            this.transform.position = value;
-        }
+        get => this.transform.position;
+        set => this.transform.position = value;
     }
 
     public bool IsEnergyRestoring
@@ -193,9 +148,9 @@ public class BaseAvatar : MonoBehaviour
         this.Reset();
 
         // Retrieve the bullet guns of the game object.
-        this.bulletGuns = this.GetComponents<BulletGun>();
+        this.BulletGuns = this.GetComponents<BulletGun>();
 
-        if (this.bulletGuns == null || this.bulletGuns.Length == 0)
+        if (this.BulletGuns == null || this.BulletGuns.Length == 0)
         {
             Debug.LogWarning("There is no bullet guns on the avatar.");
         }
@@ -205,9 +160,9 @@ public class BaseAvatar : MonoBehaviour
     {
         // Energy regen.
         bool isSomeBulletGunFiring = false;
-        for (int index = 0; index < this.bulletGuns.Length; index++)
+        for (int index = 0; index < this.BulletGuns.Length; index++)
         {
-            isSomeBulletGunFiring |= this.bulletGuns[index].IsFiring;
+            isSomeBulletGunFiring |= this.BulletGuns[index].IsFiring;
         }
 
         if (!isSomeBulletGunFiring)

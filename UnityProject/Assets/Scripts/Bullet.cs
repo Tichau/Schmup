@@ -9,15 +9,8 @@ public abstract class Bullet : MonoBehaviour
 
     public BulletType Type
     {
-        get
-        {
-            return this.type;
-        }
-
-        private set
-        {
-            this.type = value;
-        }
+        get => this.type;
+        private set => this.type = value;
     }
 
     public float Damage
@@ -28,15 +21,8 @@ public abstract class Bullet : MonoBehaviour
 
     public Vector2 Position
     {
-        get
-        {
-            return this.transform.position;
-        }
-
-        set
-        {
-            this.transform.position = value;
-        }
+        get => this.transform.position;
+        set => this.transform.position = value;
     }
 
     public virtual void Initialize(Vector2 startDirection, float speed, float damage)

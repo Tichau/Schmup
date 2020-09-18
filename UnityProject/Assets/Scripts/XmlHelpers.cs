@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 using UnityEngine;
 
-public class XmlHelpers
+public static class XmlHelpers
 {
     /// <summary>
     /// Create a C# object from a XML text asset.
@@ -20,21 +20,21 @@ public class XmlHelpers
     {
         if (textAsset == null)
         {
-            throw new ArgumentNullException("textAsset");
+            throw new ArgumentNullException(nameof(textAsset));
         }
 
         try
         {
             using (TextReader textStream = new StringReader(textAsset.text))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                T data = (T)serializer.Deserialize(textStream);
+                var serializer = new XmlSerializer(typeof(T));
+                var data = (T)serializer.Deserialize(textStream);
                 return data;
             }
         }
         catch (Exception exception)
         {
-            Debug.LogError("Asset of type '" + typeof(T) + "' failed to be deserialized. The following exception was raised:\n " + exception.Message);
+            Debug.LogError($"Asset of type '{typeof(T)}' failed to be deserialized. The following exception was raised:\n {exception.Message}");
         }
 
         return default(T);
@@ -50,26 +50,26 @@ public class XmlHelpers
     {
         if (textAsset == null)
         {
-            throw new ArgumentNullException("textAsset");
+            throw new ArgumentNullException(nameof(textAsset));
         }
 
         try
         {
             using (TextReader textStream = new StringReader(textAsset.text))
             {
-                XmlRootAttribute xRoot = new XmlRootAttribute
+                var xRoot = new XmlRootAttribute
                 {
                     ElementName = "Datatable"
                 };
 
-                XmlSerializer serializer = new XmlSerializer(typeof(List<T>), xRoot);
-                List<T> data = serializer.Deserialize(textStream) as List<T>;
+                var serializer = new XmlSerializer(typeof(List<T>), xRoot);
+                var data = serializer.Deserialize(textStream) as List<T>;
                 return data;
             }
         }
         catch (Exception exception)
         {
-            Debug.LogError("The database of type '" + typeof(T) + "' failed to load the assets. The following exception was raised:\n " + exception.Message);
+            Debug.LogError($"The database of type '{typeof(T)}' failed to load the assets. The following exception was raised:\n {exception.Message}");
         }
 
         return null;
@@ -85,20 +85,20 @@ public class XmlHelpers
     {
         if (string.IsNullOrEmpty(path))
         {
-            throw new ArgumentNullException("path");
+            throw new ArgumentNullException(nameof(path));
         }
 
         try
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
-            using (StreamWriter stream = new StreamWriter(path, false, new UTF8Encoding(false)))
+            var serializer = new XmlSerializer(typeof(T));
+            using (var stream = new StreamWriter(path, false, new UTF8Encoding(false)))
             {
                 serializer.Serialize(stream, objectToSerialize);
             }
         }
         catch (Exception exception)
         {
-            Debug.LogError("Asset of type '" + typeof(T) + "' failed to be serialized. The following exception was raised:\n " + exception.Message);
+            Debug.LogError($"Asset of type '{typeof(T)}' failed to be serialized. The following exception was raised:\n {exception.Message}");
         }        
     }
 }

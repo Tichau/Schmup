@@ -35,13 +35,7 @@ public class BulletsFactory : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    public static int Debug_BulletCount
-    {
-        get
-        {
-            return BulletsFactory.Instance.bulletCount;
-        }
-    }
+    public static int Debug_BulletCount => BulletsFactory.Instance.bulletCount;
 #endif
 
     public static Bullet GetBullet(Vector2 position, BulletType bulletType)

@@ -6,7 +6,7 @@ using Data;
 
 public class BulletGun : MonoBehaviour
 {
-    protected BaseAvatar baseAvatar;
+    protected BaseAvatar BaseAvatar;
 
     [SerializeField]
     private string weaponName;
@@ -36,80 +36,38 @@ public class BulletGun : MonoBehaviour
 
     public float RateOfFire
     {
-        get
-        {
-            return this.rateOfFire;
-        }
-
-        private set
-        {
-            this.rateOfFire = value;
-        }
+        get => this.rateOfFire;
+        private set => this.rateOfFire = value;
     }
 
     public float EnergyConsumedPerBullet
     {
-        get
-        {
-            return this.energyConsumedPerBullet;
-        }
-
-        private set
-        {
-            this.energyConsumedPerBullet = value;
-        }
+        get => this.energyConsumedPerBullet;
+        private set => this.energyConsumedPerBullet = value;
     }
 
     public float BulletSpeed
     {
-        get
-        {
-            return this.bulletSpeed;
-        }
-
-        private set
-        {
-            this.bulletSpeed = value;
-        }
+        get => this.bulletSpeed;
+        private set => this.bulletSpeed = value;
     }
 
     public float BulletDamage
     {
-        get
-        {
-            return this.bulletDamage;
-        }
-
-        private set
-        {
-            this.bulletDamage = value;
-        }
+        get => this.bulletDamage;
+        private set => this.bulletDamage = value;
     }
 
     public string WeaponName
     {
-        get
-        {
-            return this.weaponName;
-        }
-
-        private set
-        {
-            this.weaponName = value;
-        }
+        get => this.weaponName;
+        private set => this.weaponName = value;
     }
 
     public BulletType BulletType
     {
-        get
-        {
-            return this.bulletType;
-        }
-
-        private set
-        {
-            this.bulletType = value;
-        }
+        get => this.bulletType;
+        private set => this.bulletType = value;
     }
 
     public virtual bool IsFiring
@@ -131,14 +89,8 @@ public class BulletGun : MonoBehaviour
         }
     }
 
-    protected float GameObjectAngle
-    {
-        get
-        {
-            // Warning ! Euler angles are in degree.
-            return this.transform.eulerAngles.z * Mathf.Deg2Rad;
-        }
-    }
+    // Warning ! Euler angles are in degree.
+    protected float GameObjectAngle => this.transform.eulerAngles.z * Mathf.Deg2Rad;
 
     public virtual void TryToFire()
     {
@@ -155,7 +107,7 @@ public class BulletGun : MonoBehaviour
             return false;
         }
 
-        if (this.baseAvatar != null && !this.baseAvatar.CanFire())
+        if (this.BaseAvatar != null && !this.BaseAvatar.CanFire())
         {
             return false;
         }
@@ -195,9 +147,9 @@ public class BulletGun : MonoBehaviour
 
     protected virtual void Fire()
     {
-        if (this.baseAvatar != null)
+        if (this.BaseAvatar != null)
         {
-            this.baseAvatar.Energy -= this.EnergyConsumedPerBullet;
+            this.BaseAvatar.Energy -= this.EnergyConsumedPerBullet;
         }
 
         this.lastFireTime = Time.time;
@@ -215,8 +167,8 @@ public class BulletGun : MonoBehaviour
 
     protected virtual void Start()
     {
-        this.baseAvatar = this.GetComponent<BaseAvatar>();
-        if (this.baseAvatar == null)
+        this.BaseAvatar = this.GetComponent<BaseAvatar>();
+        if (this.BaseAvatar == null)
         {
             Debug.LogWarning(string.Format("Can't retrieve a base avatar on the gameobject {0}.", this.gameObject.name));
         }

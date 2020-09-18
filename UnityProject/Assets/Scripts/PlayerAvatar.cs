@@ -16,18 +16,9 @@ public class PlayerAvatar : BaseAvatar
     private float lastWeaponSelectionChangeTime;
     private int selectedWeapon;
 
-    public string SelectedWeaponName
-    {
-        get
-        {
-            return this.weaponsNames[this.selectedWeapon];
-        }
-    }
+    public string SelectedWeaponName => this.weaponsNames[this.selectedWeapon];
 
-    public bool IsDead
-    {
-        get { return this.HealthPoint <= 0; }
-    }
+    public bool IsDead => this.HealthPoint <= 0;
 
     public override void TakeDamage(float damage)
     {
@@ -50,9 +41,9 @@ public class PlayerAvatar : BaseAvatar
         this.lastWeaponSelectionChangeTime = Time.time;
         this.selectedWeapon = (this.selectedWeapon + 1) % this.weaponsNames.Length;
 
-        for (int index = 0; index < this.bulletGuns.Length; index++)
+        for (int index = 0; index < this.BulletGuns.Length; index++)
         {
-            BulletGun bulletGun = this.bulletGuns[index];
+            BulletGun bulletGun = this.BulletGuns[index];
             if (bulletGun.WeaponName == this.weaponsNames[this.selectedWeapon])
             {
                 bulletGun.enabled = true;

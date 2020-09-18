@@ -12,6 +12,5 @@ public class DamageTakenEventArgs : EventArgs
     public float Damage
     {
         get;
-        private set;
     }
 }

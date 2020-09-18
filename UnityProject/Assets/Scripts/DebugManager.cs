@@ -28,9 +28,9 @@ public class DebugManager : MonoBehaviour
         // Bullet count
         GUI.BeginGroup(new Rect(Screen.width - 200f, 70f, 200f, 300f));
         {
-            GUILayout.Label("Bullets: " + BulletsFactory.Debug_BulletCount, this.guiSkin.label);
-            GUILayout.Label("Available enemy 1: " + EnemyFactory.GetCount("Prefabs/Enemy_01"), this.guiSkin.label);
-            GUILayout.Label("Available enemy 2: " + EnemyFactory.GetCount("Prefabs/Enemy_02"), this.guiSkin.label);
+            GUILayout.Label($"Bullets: {BulletsFactory.Debug_BulletCount}", this.guiSkin.label);
+            GUILayout.Label($"Available enemy 1: {EnemyFactory.GetCount("Prefabs/Enemy_01")}", this.guiSkin.label);
+            GUILayout.Label($"Available enemy 2: {EnemyFactory.GetCount("Prefabs/Enemy_02")}", this.guiSkin.label);
         }
         GUI.EndGroup();
     }

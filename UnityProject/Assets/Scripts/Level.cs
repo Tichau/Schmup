@@ -18,25 +18,14 @@ public class Level
         Spawned,
     }
 
-    public string Name
-    {
-        get
-        {
-            return this.description.Name;
-        }
-    }
+    public string Name => this.description.Name;
 
-    public bool IsLevelStarted
-    {
-        get
-        {
-            return this.currentLevelStartDate >= 0f;
-        }
-    }
+    public bool IsLevelStarted => this.currentLevelStartDate >= 0f;
 
     public IEnumerator Load(LevelDescription levelDescription)
     {
         this.description = levelDescription;
+        Debug.Assert(this.description != null);
 
         // Load level scene.
         AsyncOperation loadSceneAsync = SceneManager.LoadSceneAsync(this.description.Scene, LoadSceneMode.Additive);
@@ -91,11 +80,6 @@ public class Level
         }
 
         float timePassedSinceBeginning = Time.time - this.currentLevelStartDate;
-        
-        if (this.description == null)
-        {
-            return;
-        }
         
         if (this.description.Enemies == null)
         {

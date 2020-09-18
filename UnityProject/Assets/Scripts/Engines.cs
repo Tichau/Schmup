@@ -23,15 +23,8 @@ public class Engines : MonoBehaviour
 
     public Vector2 Position
     {
-        get
-        {
-            return this.transform.position;
-        }
-
-        private set
-        {
-            this.transform.position = value;
-        }
+        get => this.transform.position;
+        private set => this.transform.position = value;
     }
 
     private float MaximumSpeed

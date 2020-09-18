@@ -113,8 +113,7 @@ public class GameManager : MonoBehaviour
         // TODO: Kill all enemies.
         
         // Spawn the player.
-        GameObject player =
-            (GameObject) GameObject.Instantiate(Instance.playerPrefab, new Vector3(0f, 0f), Quaternion.identity);
+        var player = (GameObject)GameObject.Instantiate(Instance.playerPrefab, new Vector3(0f, 0f), Quaternion.identity);
         this.PlayerAvatar = player.GetComponent<PlayerAvatar>();
         if (this.PlayerAvatar == null)
         {

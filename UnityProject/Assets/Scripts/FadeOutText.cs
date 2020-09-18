@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class FadeOutText : MonoBehaviour
@@ -20,9 +18,9 @@ public class FadeOutText : MonoBehaviour
 	
 	private void Update()
 	{
-	    if (text.color != Color.clear)
+	    if (this.text.color != Color.clear)
 	    {
-	        text.color = Color.Lerp(text.color, Color.clear, (Time.time - this.startTime) / this.duration);
+            this.text.color = Color.Lerp(this.text.color, Color.clear, (Time.time - this.startTime) / this.duration);
 	    }
     }
 }

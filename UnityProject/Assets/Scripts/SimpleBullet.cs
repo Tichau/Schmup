@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class SimpleBullet : Bullet
 {
-    protected Vector2 speed;
+    protected Vector2 Speed;
 
     public override void Initialize(Vector2 startDirection, float speed, float damage)
     {
         base.Initialize(startDirection, speed, damage);
 
-        this.speed = startDirection * speed;
+        this.Speed = startDirection * speed;
     }
 
     protected override void UpdatePosition()
     {
         base.UpdatePosition();
 
-        this.Position += this.speed * Time.deltaTime;
+        this.Position += this.Speed * Time.deltaTime;
     }
 }
