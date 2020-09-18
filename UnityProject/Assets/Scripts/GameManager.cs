@@ -110,8 +110,13 @@ public class GameManager : MonoBehaviour
         this.currentLevelIndex = -1;
         this.Score = 0;
 
-        // TODO: Kill all enemies.
-        
+        // Kill all enemies before starting new level.
+        EnemyAvatar[] enemies = GameObject.FindObjectsOfType<EnemyAvatar>();
+        foreach (EnemyAvatar enemy in enemies)
+        {
+            EnemyFactory.ReleaseEnemy(enemy);
+        }
+
         // Spawn the player.
         var player = (GameObject)GameObject.Instantiate(Instance.playerPrefab, new Vector3(0f, 0f), Quaternion.identity);
         this.PlayerAvatar = player.GetComponent<PlayerAvatar>();
