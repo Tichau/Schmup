@@ -1,0 +1,134 @@
+.unity-text-element {
+    -unity-font: resource('Fonts/segoeuisl');
+}
+
+Label {
+    color: rgb(192, 192, 192);
+    opacity: 0.5;
+}
+
+#HUD-container.game-state--Playing {
+    opacity: 1;
+}
+#HUD-container.game-state--Dead {
+    opacity: 0;
+    transition-property: all, opacity;
+    transition-duration: 0s, 2s;
+    transition-timing-function: ease, ease-in-cubic;
+    transition-delay: 0s, 0s;
+}
+
+#GameOver-container.game-state--Playing {
+    opacity: 0;
+}
+#GameOver-container.game-state--Dead {
+    opacity: 1;
+    transition-property: all, opacity;
+    transition-duration: 0s, 2s;
+    transition-timing-function: ease, ease-in-cubic;
+    transition-delay: 0s, 0s;
+}
+
+.hud--level-name {
+    font-size: 36px;
+    -unity-font-style: italic;
+    margin-top: 10px;
+    margin-left: 35px;
+}
+
+.hud--score {
+    font-size: 36px;
+    -unity-font-style: bold;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 35px;
+    -unity-text-align: upper-right;
+}
+
+.hud--status-bar {
+    flex-grow: 1;
+    max-height: 48px;
+    flex-direction: row;
+}
+
+.hud--status-bar--bar {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    opacity: 1;
+}
+
+.hud--status-bar--active-weapon {
+    flex-grow: 0;
+    width: 48px;
+}
+
+.hud--status-bar--active-weapon.SimpleGun {
+    background-image: resource('Textures/SimpleGunIcon');
+}
+
+.hud--status-bar--active-weapon.DoubleGun {
+    background-image: resource('Textures/DoubleGunIcon');
+}
+
+.hud--status-bar--active-weapon.SpiralGun {
+    background-image: resource('Textures/SpiralGunIcon');
+}
+
+.unity-progress-bar__background {
+    background-color: rgb(20, 20, 20);
+    border-width: 0;
+}
+
+.unity-progress-bar__progress {
+    margin: 0;
+}
+
+.unity-progress-bar__title {
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.hud--status-bar--health .unity-progress-bar__progress {
+    background-color: rgb(170, 57, 57);
+}
+
+.hud--status-bar--health .unity-progress-bar__title {
+    color: rgb(205, 105, 105);
+}
+
+.hud--status-bar--energy .unity-progress-bar__progress {
+    background-color: rgb(44, 71, 112);
+}
+
+.hud--status-bar--energy .unity-progress-bar__title {
+    color: rgb(92, 132, 192);
+}
+
+.hud--status-bar--energy.restoring .unity-progress-bar__progress {
+    background-color: rgb(170, 128, 57);
+}
+
+.hud--status-bar--energy.restoring .unity-progress-bar__title {
+    color: rgb(210, 177, 120);
+}
+
+.game-over--title {
+    -unity-font-style: bold;
+    font-size: 100px;
+    -unity-text-align: upper-center;
+    opacity: 0.8;
+}
+
+.game-over--subtitle {
+    font-size: 75px;
+    -unity-text-align: upper-center;
+    opacity: 0.8;
+}
+
+.game-over--score {
+    font-size: 50px;
+    -unity-text-align: upper-center;
+    opacity: 0.8;
+}

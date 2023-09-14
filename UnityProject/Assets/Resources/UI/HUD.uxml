@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UI/stylesheet.uss?fileID=7433441132597879392&amp;guid=683158af32cb13d47b2a75d8cda51de2&amp;type=3#stylesheet" />
+    <ui:VisualElement name="top-hud" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+        <ui:Label tabindex="-1" text="Level Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="level-name" class="hud--level-name" />
+        <ui:Label tabindex="-1" text="000 000 000" parse-escape-sequences="true" display-tooltip-when-elided="true" name="score" class="hud--score" style="align-self: flex-start; align-items: auto; justify-content: flex-start; flex-direction: column;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="status-bar" class="hud--status-bar">
+        <ui:VisualElement name="left-side" style="flex-grow: 1;">
+            <ui:ProgressBar value="50" name="energy-bar" title="Energy" class="hud--status-bar--bar hud--status-bar--energy" />
+            <ui:ProgressBar value="50" name="health-bar" title="Health" class="hud--status-bar--bar hud--status-bar--health" />
+        </ui:VisualElement>
+        <ui:VisualElement name="active-weapon" class="hud--status-bar--active-weapon te" />
+    </ui:VisualElement>
+</ui:UXML>

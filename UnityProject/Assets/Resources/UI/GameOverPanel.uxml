@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UI/stylesheet.uss?fileID=7433441132597879392&amp;guid=683158af32cb13d47b2a75d8cda51de2&amp;type=3#stylesheet" />
+    <ui:VisualElement name="game-over-panel" style="flex-grow: 1; justify-content: center;">
+        <ui:Label tabindex="-1" text="GAME OVER" parse-escape-sequences="true" display-tooltip-when-elided="true" name="game-over-title" class="game-over--title" />
+        <ui:Label tabindex="-1" text="Press space to restart" parse-escape-sequences="true" display-tooltip-when-elided="true" name="game-over-subtitle" class="game-over--subtitle" />
+        <ui:Label tabindex="-1" text="Your score: 000 000 000&#10;Best score: 000 000 000" parse-escape-sequences="true" display-tooltip-when-elided="true" name="game-over-scores" class="game-over--score" />
+    </ui:VisualElement>
+</ui:UXML>
