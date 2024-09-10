@@ -1,5 +1,6 @@
 .unity-text-element {
-    -unity-font: resource('Fonts/segoeuisl');
+    -unity-font: resource('Fonts/AldotheApache');
+    -unity-font-definition: resource('Fonts/AldotheApache SDF');
 }
 
 Label {
@@ -10,6 +11,7 @@ Label {
 #HUD-container.game-state--Playing {
     opacity: 1;
 }
+
 #HUD-container.game-state--Dead {
     opacity: 0;
     transition-property: all, opacity;
@@ -21,6 +23,7 @@ Label {
 #GameOver-container.game-state--Playing {
     opacity: 0;
 }
+
 #GameOver-container.game-state--Dead {
     opacity: 1;
     transition-property: all, opacity;
