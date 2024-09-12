@@ -1,11 +1,9 @@
 ﻿// <copyright file="XmlHelpers.cs" company="AAllard">Copyright AAllard. All rights reserved.</copyright>
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-
 using UnityEngine;
 
 public static class XmlHelpers
@@ -34,45 +32,10 @@ public static class XmlHelpers
         }
         catch (Exception exception)
         {
-            Debug.LogError($"Asset of type '{typeof(T)}' failed to be deserialized. The following exception was raised:\n {exception.Message}");
+            Debug.LogError($"Asset of type '{typeof(T)}' failed to be deserialized. The following exception was raised:\n {exception}");
         }
 
-        return default(T);
-    }
-
-    /// <summary>
-    /// Create a database from a XML text asset.
-    /// </summary>
-    /// <typeparam name="T">The type of objects of the database.</typeparam>
-    /// <param name="textAsset">The XML text asset where the database is serialized.</param>
-    /// <returns>A list of deserialized C# objects.</returns>
-    public static List<T> DeserializeDatabaseFromXML<T>(TextAsset textAsset)
-    {
-        if (textAsset == null)
-        {
-            throw new ArgumentNullException(nameof(textAsset));
-        }
-
-        try
-        {
-            using (TextReader textStream = new StringReader(textAsset.text))
-            {
-                var xRoot = new XmlRootAttribute
-                {
-                    ElementName = "Datatable"
-                };
-
-                var serializer = new XmlSerializer(typeof(List<T>), xRoot);
-                var data = serializer.Deserialize(textStream) as List<T>;
-                return data;
-            }
-        }
-        catch (Exception exception)
-        {
-            Debug.LogError($"The database of type '{typeof(T)}' failed to load the assets. The following exception was raised:\n {exception.Message}");
-        }
-
-        return null;
+        return default;
     }
 
     /// <summary>
@@ -98,7 +61,7 @@ public static class XmlHelpers
         }
         catch (Exception exception)
         {
-            Debug.LogError($"Asset of type '{typeof(T)}' failed to be serialized. The following exception was raised:\n {exception.Message}");
+            Debug.LogError($"Asset of type '{typeof(T)}' failed to be serialized. The following exception was raised:\n {exception}");
         }        
     }
 }

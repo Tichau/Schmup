@@ -1,0 +1,107 @@
+<LevelDescription Name="Saturn" Duration="40">
+    <Scene>02_Saturn</Scene>
+
+    <!-- Boss -->
+    <EnemyDescription>
+        <SpawnDate>3</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>0</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_Boss</PrefabPath>
+    </EnemyDescription>
+
+    <!-- first side kicks -->
+    <EnemyDescription>
+        <SpawnDate>10</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>-4</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_04</PrefabPath>
+    </EnemyDescription>
+
+    <EnemyDescription>
+        <SpawnDate>10</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>-2</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_04</PrefabPath>
+    </EnemyDescription>
+
+    <EnemyDescription>
+        <SpawnDate>10</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>4</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_04</PrefabPath>
+    </EnemyDescription>
+
+    <EnemyDescription>
+        <SpawnDate>10</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>2</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_04</PrefabPath>
+    </EnemyDescription>
+
+
+    <!-- second side kicks -->
+    <EnemyDescription>
+        <SpawnDate>20</SpawnDate>
+        <SpawnPosition>
+            <x>12</x>
+            <y>3</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_02</PrefabPath>
+    </EnemyDescription>
+
+    <EnemyDescription>
+        <SpawnDate>20</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>4</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_03</PrefabPath>
+    </EnemyDescription>
+
+    <EnemyDescription>
+        <SpawnDate>20</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>2</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_03</PrefabPath>
+    </EnemyDescription>
+
+        <EnemyDescription>
+        <SpawnDate>20</SpawnDate>
+        <SpawnPosition>
+            <x>12</x>
+            <y>-3</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_02</PrefabPath>
+    </EnemyDescription>
+
+    <EnemyDescription>
+        <SpawnDate>20</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>-4</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_03</PrefabPath>
+    </EnemyDescription>
+
+    <EnemyDescription>
+        <SpawnDate>20</SpawnDate>
+        <SpawnPosition>
+            <x>10</x>
+            <y>-2</y>
+        </SpawnPosition>
+        <PrefabPath>Prefabs/Enemy_03</PrefabPath>
+    </EnemyDescription>
+
+</LevelDescription>

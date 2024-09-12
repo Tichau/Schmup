@@ -23,14 +23,14 @@ public class GameManager : MonoBehaviour
     private float rateOfEnemySpawnIncreaseStep = 0.02f;
 
     [SerializeField]
-    private TextAsset levelsDatabase;
+    private TextAsset[] levelAssets;
 
     private double lastEnemySpawnTime;
 
     private Level currentLevel;
     private int currentLevelIndex = -1;
 
-    private List<LevelDescription> levelDatabase;
+    private LevelDescription[] levelDatabase;
 
     public event System.EventHandler<LevelChangedEventArgs> LevelChanged;
 
@@ -125,11 +125,19 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Can't retrieve the PlayerAvatar script.");
         }
 
-        this.levelDatabase = XmlHelpers.DeserializeDatabaseFromXML<LevelDescription>(this.levelsDatabase);
-        if (this.levelDatabase != null && this.levelDatabase.Count > 0)
+        Debug.Assert(this.levelAssets.Length > 0, "There should have at least one level asset registered.");
+
+        this.levelDatabase = new LevelDescription[this.levelAssets.Length];
+        for (int index = 0; index < this.levelAssets.Length; index++)
         {
-            yield return this.StartCoroutine(this.NextLevel());
+            this.levelDatabase[index] = XmlHelpers.DeserializeFromXML<LevelDescription>(this.levelAssets[index]);
+            if (this.levelDatabase[index] == null)
+            {
+                Debug.LogError($"Level {index} failed to be loaded.");
+            }
         }
+
+        yield return this.StartCoroutine(this.NextLevel());
 
         this.State = GameState.Playing;
     }
@@ -186,7 +194,7 @@ public class GameManager : MonoBehaviour
             yield break;
         }
 
-        if (this.currentLevelIndex >= this.levelDatabase.Count)
+        if (this.currentLevelIndex >= this.levelDatabase.Length)
         {
             Debug.Log("No remaining level.");
             yield break;

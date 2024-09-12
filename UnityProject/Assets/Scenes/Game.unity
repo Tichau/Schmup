@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -254,7 +253,10 @@ MonoBehaviour:
   rateOfEnemySpawn: 1
   maximumRateOfEnemySpawn: 1.1
   rateOfEnemySpawnIncreaseStep: 0.002
-  levelsDatabase: {fileID: 4900000, guid: 29427ad2c4a3e4f47a0936b8c69192ef, type: 3}
+  levelAssets:
+  - {fileID: 4900000, guid: c97a656dede9dfc4e91004d2565af20e, type: 3}
+  - {fileID: 4900000, guid: 804f2fe94f005964899513bd90c748a6, type: 3}
+  - {fileID: 4900000, guid: 29427ad2c4a3e4f47a0936b8c69192ef, type: 3}
 --- !u!4 &768236058
 Transform:
   m_ObjectHideFlags: 0
